@@ -1,4 +1,5 @@
-# apigee-api-traffic-reports
+# apigee-api-traffic-reports - WIP
+This repo is still a work in progress (see the TODOs below).
 
 ## Business Case for this Repository
 Customers need a consistent way to traffic Apigee X API counts across all of their Apigee organzations and environments.  Today this is accomplished with a variety of tools, which I've listed below or customers roll their own solution.  
@@ -56,7 +57,13 @@ Terrform performs the following tasks:
 * Creates the Connectors
 * Creates the integrations
 
+## Google Cloud
+This is NOT an officially supported Google Cloud product.  Best effort is provided. 
 
+## TODOs
+1. Add deployment of Integrations
+2. Add deployment of Looker reports via looker API
+  Look, query and datasource
 
 ## Troubleshooting and Testing/Development Commands
 ### Integration CLI
