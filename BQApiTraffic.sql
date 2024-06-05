@@ -1,0 +1,1 @@
+SELECT * FROM `$PROJECT_ID.apigee_reports.ApigeeTrafficUsage` LIMIT 1000
