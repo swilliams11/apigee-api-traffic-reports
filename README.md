@@ -11,9 +11,18 @@ This repository contains everything you need to run an Apigee X API management t
 Terrform performs the following tasks:
 * Enables the necessary APIs in your project
 * Creates two new service accounts with the following permissions
-  * Service account with permissions to list environments and deployments
-  * Service account to call the optimizedStats
-  * Service account for the BQ connector.
+  * Service Account: `app-int-apigee-get-stats@`
+    * Custom Role: `appIntApigeeGetStatsRole`
+      * permissions: `apigee.environments.getStats`
+      * Service account with permissions to list environments and deployments
+      * Service account to call the optimizedStats
+  * Service Account: `app-int-apigee-list-envs@`
+    * To get deployments and list environments.
+    * Custom Role: `appIntListEnvsRole`
+      * permissions: `apigee.deployments.list`, `apigee.environments.list`
+  * Service Account: `app-int-bq-connector@`
+    * Service account for the BigQuery connector.
+    * Assigned role: `roles/bigquery.dataEditor`
 * Assigns the Service Account Token Creator role to the Application Integration Service Agent (`service-PROJECT_NUMBER@gcp-sa-integrations.iam.gserviceaccount.com`).
 [Service Account](https://cloud.google.com/application-integration/docs/configure-authentication-profiles#service-account)
 * Creates the Authentication Profiles so that the REST API tasks can execute successfully.
@@ -24,28 +33,30 @@ Terrform performs the following tasks:
 
 ## What's included?
 * Application Integration that collects all API traffic across all Apigee organizations and environments
-* Application Integration that writes the data to BigQuery
-* Looker Report to display the BigQuery dataset
+* Application Integration that writes the data to BigQuery. This integration calls the one above it.
 * Terraform script to deploy all resources
+* TBD - Looker Report to display the BigQuery dataset
+
 
 ## Installation
 For best results, you should run this in Cloud Shell, especially Windows users.
+
 
 ### Prerequisites
 1. Install gcloud.
 2. Install the [integration cli](https://github.com/GoogleCloudPlatform/application-integration-management-toolkit)
 
+
 ### Init
 ```shell
 export PROJECT_ID=YOUR_PROJECT
-gcloud auth login
 gcloud auth application-default login
 gcloud config set project $PROJECT_ID
 ```
 
 
 ### Terraform Apply
-Execute the following commands from the apigee-api-traffic-reports folder. 
+Execute the following commands from the `apigee-api-traffic-reports` folder. 
 
 1. Update the `terraform.tfvars` file with the following values.
 * `project_id`
@@ -60,6 +71,38 @@ terraform apply
 ```
 
 
+### Allow the Integration to access more than one Apigee Organization
+The integration will pull API traffic from all organizations included in the organizations array.  However, there are a few
+steps that need to be completed for this to work successfully.
+
+1. You must add two Service Accounts (SA) to your other Google Cloud projects with the following permissions.
+  * Service Account: `app-int-apigee-get-stats@`
+    * Custom Role: `appIntApigeeGetStatsRole`
+      * permissions: `apigee.environments.getStats`
+      * Service account with permissions to list environments and deployments
+      * Service account to call the optimizedStats
+  * Service Account: `app-int-apigee-list-envs@`
+    * To get deployments and list environments.
+    * Custom Role: `appIntListEnvsRole`
+      * permissions: `apigee.deployments.list`, `apigee.environments.list`
+2. You can either create a custom role and assign it to these SAs (preferred) or you can grant the SAs predefined roles.
+
+Once you grant these SAs the appropriate permissions in your other GC projects, then it should be able to successfully pull the `optimizedStats`.
+
+
+## Post Installation
+After the integration is deployed to your Google Cloud project, then you need to execute the initial collection of data.
+
+Currently the integration has to triggers:
+* API Trigger - which will pull all the optimized stats starting with the start date that you provide.
+* Schedule Trigger - which will pull all the optimized stats data from the prior day
+
+There will be some overlap here, so I need to update the API trigger to pull all data from the start date to up one day before the integration is executed.
+
+1. You must manually trigger the API using the Integration Test functionality. Enter the start date and this integration will call the `optimizedStats` API to pull your request counts.
+2. The scheduled trigger will execute every day and will call the `optimizedStats` API to get all requests for the prior day (24 hours).
+
+
 ## Google Cloud
 This is NOT an officially supported Google Cloud product.  Best effort is provided. 
 
@@ -68,10 +111,12 @@ This is NOT an officially supported Google Cloud product.  Best effort is provid
 2. Allow user to add multiple organizations in the `terraform.tfvars`; only one org is supported today.
 3. Provide clear way for initializing the BQ table and running the integration every day. Need documentation on this. 
 4. Update the BQ table to separate the month and year as STRING columns.
-3. Add deployment of Looker reports via looker API
-  * Look, 
-  * query and 
-  * datasource
+5. Update the integration so that when the API trigger is called it only pulls the data from the start date to 1 day prior to the date the integration is run.  This will help avoid duplicate API counts.
+6. Add deployment of Looker reports via looker API
+   * Look, 
+   * query and 
+   * datasource
+
 
 ## Troubleshooting and Testing/Development Commands
 ### Integration CLI
