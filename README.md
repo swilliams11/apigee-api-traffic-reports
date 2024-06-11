@@ -2,7 +2,7 @@
 This repo is still a work in progress (see the TODOs below).
 
 ## Business Case for this Repository
-Customers need a consistent way to traffic Apigee X API counts across all of their Apigee organzations and environments.  Today this is accomplished with a variety of tools, which I've listed below or customers roll their own solution.  
+Customers need a consistent way to aggregate all Apigee X API request across all of their Apigee organzations and environments.  Today this is accomplished with a variety of tools, which I've listed below or customers roll their own solution.  
 
 ## Summary
 This repository contains everything you need to run an Apigee X API management traffic report consistently across all organizations.
