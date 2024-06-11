@@ -5,7 +5,22 @@ This repo is still a work in progress (see the TODOs below).
 Customers need a consistent way to traffic Apigee X API counts across all of their Apigee organzations and environments.  Today this is accomplished with a variety of tools, which I've listed below or customers roll their own solution.  
 
 ## Summary
-This repository contains everything you need to run an Apigee X API management traffic report consistently across all organizations
+This repository contains everything you need to run an Apigee X API management traffic report consistently across all organizations.
+
+## Features
+Terrform performs the following tasks:
+* Enables the necessary APIs in your project
+* Creates two new service accounts with the following permissions
+  * Service account with permissions to list environments and deployments
+  * Service account to call the optimizedStats
+  * Service account for the BQ connector.
+* Assigns the Service Account Token Creator role to the Application Integration Service Agent (`service-PROJECT_NUMBER@gcp-sa-integrations.iam.gserviceaccount.com`).
+[Service Account](https://cloud.google.com/application-integration/docs/configure-authentication-profiles#service-account)
+* Creates the Authentication Profiles so that the REST API tasks can execute successfully.
+* Creates BigQuery Dataset and Table.
+* Creates the Connectors
+* Creates the integrations
+
 
 ## What's included?
 * Application Integration that collects all API traffic across all Apigee organizations and environments
@@ -21,7 +36,7 @@ For best results, you should run this in Cloud Shell, especially Windows users.
 2. Install the [integration cli](https://github.com/GoogleCloudPlatform/application-integration-management-toolkit)
 
 ### Init
-```
+```shell
 export PROJECT_ID=YOUR_PROJECT
 gcloud auth login
 gcloud auth application-default login
@@ -36,34 +51,27 @@ Execute the following commands from the apigee-api-traffic-reports folder.
 * `project_id`
 * `project_number`
 
-2. Execute the following commands.
-```
+2. Execute the following commands. As of today, you must export `project` and `region` for the `integrationcli`.
+```shell
+export project=PROJECT_ID
+export region=REGION
 terraform init
 terraform apply
 ```
 
 
-#### Terraform Actions
-Terrform performs the following tasks:
-* Enables the necessary APIs in your project
-* Creates two new service accounts with the following permissions
-  * Service account with permissions to list environments and deployments
-  * Service account to call the optimizedStats
-  * Service account for the BQ connector.
-* Assigns the Service Account Token Creator role to the Application Integration Service Agent (`service-PROJECT_NUMBER@gcp-sa-integrations.iam.gserviceaccount.com`).
-[Service Account](https://cloud.google.com/application-integration/docs/configure-authentication-profiles#service-account)
-* Creates the Authentication Profiles so that REST tasks can execute successfully.
-* Create BigQuery Dataset and Table.
-* Creates the Connectors
-* Creates the integrations
-
 ## Google Cloud
 This is NOT an officially supported Google Cloud product.  Best effort is provided. 
 
 ## TODOs
-1. Add deployment of Integrations
-2. Add deployment of Looker reports via looker API
-  Look, query and datasource
+1. ~~Add deployment of Integrations~~
+2. Allow user to add multiple organizations in the `terraform.tfvars`; only one org is supported today.
+3. Provide clear way for initializing the BQ table and running the integration every day. Need documentation on this. 
+4. Update the BQ table to separate the month and year as STRING columns.
+3. Add deployment of Looker reports via looker API
+  * Look, 
+  * query and 
+  * datasource
 
 ## Troubleshooting and Testing/Development Commands
 ### Integration CLI
