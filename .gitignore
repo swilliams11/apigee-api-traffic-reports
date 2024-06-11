@@ -2,3 +2,10 @@
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+integrations/api_count/prod
+integrations/api_count_bq/prod
+integrations/api_count_bq/cl-getApiCount-to-bq-tf-config.json
+integrations/api_count_bq/cl-getApiCount-to-bq-tf.json
+integrations/api_count_bq/test-bq-config.json.bak
+integrations/test-bq-config.json.bak
+test_files/

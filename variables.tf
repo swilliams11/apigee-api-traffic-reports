@@ -43,3 +43,13 @@ variable "connector_region"{
     type = string
     default = "us-central1"
 }
+
+variable "intergrations_src_folder"{
+  type = string
+    default = "integrations/api_count_bq/src/"
+}
+
+variable "intergrations_config_vars_folder"{
+  type = string
+    default = "integrations/api_count_bq/dev/config-variables/"
+}

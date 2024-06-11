@@ -275,18 +275,22 @@ resource "null_resource" "find_replace_integration" {
 
 
 resource "null_resource" "upload_integration" {
+  # Add any dependencies that the script needs here
+  depends_on = [null_resource.find_replace_config,
+                null_resource.find_replace_integration
+                ]
 
   # this does not deploy both intergrations; it only deploys one of them.
-  provisioner "local-exec" {
-    when = create
-    interpreter = ["bash", "-c"] 
-    command = "integrationcli integrations apply -f integrations/api_count/ -e dev -p ${var.project_id} -r ${var.connector_region} --default-token"
-  }
-#     provisioner "local-exec" {
-#         when = create
-#         interpreter = ["bash", "-c"]
-#         command = "integrationcli integrations create -f integrations/api_count/src/cl-getApiCount-tf.json -n cl-getApiCount-tf -p ${var.project_id} -r ${var.connector_region} --default-token"
+#   provisioner "local-exec" {
+#     when = create
+#     interpreter = ["bash", "-c"] 
+#     command = "integrationcli integrations apply -f integrations/ -e dev -p ${var.project_id} -r ${var.connector_region} --default-token"
 #   }
+    provisioner "local-exec" {
+        when = create
+        interpreter = ["bash", "-c"]
+        command = "integrationcli integrations create -f integrations/api_count/src/cl-getApiCount-tf.json -n cl-getApiCount-tf -p ${var.project_id} -r ${var.connector_region} --default-token"
+  }
 
   provisioner "local-exec" {
     when    = destroy
@@ -305,15 +309,10 @@ resource "null_resource" "upload_integration_bq" {
                 ]
 
   # this does not deploy both intergrations; it only deploys one of them.
-#   provisioner "local-exec" {
-#     when = create
-#     interpreter = ["bash", "-c"] 
-#     command = "integrationcli integrations create -f integrations/api_count/src/cl-getApiCount-to-bq-tf.json -n cl-getApiCount-to-bq-tf -p ${var.project_id} -r ${var.connector_region} --default-token"
-#   }
-provisioner "local-exec" {
+  provisioner "local-exec" {
     when = create
     interpreter = ["bash", "-c"] 
-    command = "integrationcli integrations apply -f integrations/api_count_bq/ -e dev -p ${var.project_id} -r ${var.connector_region} --default-token"
+    command = "integrationcli integrations create -f integrations/api_count/src/cl-getApiCount-to-bq-tf.json -n cl-getApiCount-to-bq-tf -p ${var.project_id} -r ${var.connector_region} --default-token"
   }
 
   provisioner "local-exec" {

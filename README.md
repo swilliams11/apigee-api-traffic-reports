@@ -73,6 +73,19 @@ project=$(gcloud config get-value project | head -n 1)
 region=us-central1
 ```
 
+### Terraform Taint commands.
+```shell
+terraform taint null_resource.find_replace_config
+terraform taint null_resource.find_replace_integration
+terraform taint null_resource.upload_integration
+```
+
+### Terraform Destroy commands
+```shell
+terraform destroy -target=null_resource.upload_integration -target=null_resource.find_replace_integration -target=null_resource.find_replace_config -target=null_resource.upload_integration_bq
+```
+
+#### Connectors
 Get the integration values. 
 ```
 integrationcli connectors get -n cl-getapicount-to-bq -p $project -r $region --overrides=true --default-token --view FULL
@@ -97,3 +110,12 @@ Update the Node configuration.
 ```shell
 integrationcli connectors nodecount update -n cl-getapicount-to-bq-tf --max=1 --min=1 --default-token --wait
 ```
+
+#### Integrations
+
+```shell
+integrationcli integrations create -f integrations/src/cl-getApiCount-tf.json -n cl-getApiCount-tf -p $project -r $region --default-token
+
+integrationcli integrations create -f integrations/src/cl-getApiCount-to-bq-tf.json -n cl-getApiCount-to-bq-tf -p $project -r $region --default-token
+```
+

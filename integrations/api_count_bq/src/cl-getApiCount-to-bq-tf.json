@@ -1,0 +1,454 @@
+{
+  "triggerConfigs": [{
+    "label": "For Each Deployment ",
+    "startTasks": [{
+      "taskId": "3"
+    }],
+    "properties": {
+      "Trigger name": "cl-getApiCount-to-BQ_Private_1"
+    },
+    "triggerType": "PRIVATE_TRIGGER",
+    "triggerNumber": "2",
+    "triggerId": "private_trigger/cl-getApiCount-to-BQ_Private_1",
+    "position": {
+      "x": 536,
+      "y": 42
+    }
+  }, {
+    "label": "API Trigger",
+    "startTasks": [{
+      "taskId": "6"
+    }],
+    "properties": {
+      "Trigger name": "cl-getApiCount-to-BQ_API_1"
+    },
+    "triggerType": "API",
+    "triggerNumber": "1",
+    "triggerId": "api_trigger/cl-getApiCount-to-BQ_API_1",
+    "position": {
+      "x": -112,
+      "y": -128
+    }
+  }, {
+    "label": "Schedule Trigger",
+    "startTasks": [{
+      "taskId": "7"
+    }],
+    "properties": {
+      "Timer Name": "cl-getApiCount-to-bq_Timer_1",
+      "Scheduled Time spec": "0 9 * * *"
+    },
+    "triggerType": "CRON",
+    "triggerNumber": "3",
+    "triggerId": "cron_trigger/cl-getApiCount-to-bq_Timer_1/0+9+*+*+*",
+    "position": {
+      "x": 240,
+      "y": -128
+    }
+  }],
+  "taskConfigs": [{
+    "task": "SubWorkflowExecutorV2Task",
+    "taskId": "1",
+    "parameters": {
+      "disableEUCPropagation": {
+        "key": "disableEUCPropagation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "executionIds": {
+        "key": "executionIds",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_1_executionIds`$"]
+          }
+        }
+      },
+      "timeInMsToSchedule": {
+        "key": "timeInMsToSchedule",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "triggerId": {
+        "key": "triggerId",
+        "value": {
+          "stringValue": "api_trigger/cl-getAPICount_1"
+        }
+      },
+      "executionStrategy": {
+        "key": "executionStrategy",
+        "value": {
+          "stringValue": "SYNC"
+        }
+      },
+      "requestParamsMap": {
+        "key": "requestParamsMap",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"OrganizationList\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"OrganizationList\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"startDate\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"startDateTimeInput\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"triggerType\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"triggerType\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"startDate\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"startDateInput\"\n      }\n    }\n  }]\n}"
+        }
+      },
+      "workflowName": {
+        "key": "workflowName",
+        "value": {
+          "stringValue": "cl-getApiCount"
+        }
+      },
+      "inputMap": {
+        "key": "inputMap",
+        "value": {
+          "stringArray": {
+          }
+        }
+      },
+      "overrideParamsMap": {
+        "key": "overrideParamsMap",
+        "value": {
+          "stringArray": {
+          }
+        }
+      },
+      "responseParamsMap": {
+        "key": "responseParamsMap",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutput\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsData\"\n      }\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "4"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Get PDU from cl-getApiCount",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 112,
+      "y": 166
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "3",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$analyticsRecord.organization$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.organization$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$analyticsRecord.env$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.environment$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$analyticsRecord.proxy$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.proxy$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"INT_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$analyticsRecord.count$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"doubleFunction\": {\n              \"functionName\": \"ROUND\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.count$\",\n      \"fieldType\": \"INT_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$analyticsRecord.monthYear$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.date$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "5"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "BQ Table format",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 536,
+      "y": 166
+    }
+  }, {
+    "task": "SubWorkflowForEachLoopV2Task",
+    "taskId": "4",
+    "parameters": {
+      "iterationElementMapping": {
+        "key": "iterationElementMapping",
+        "value": {
+          "stringValue": "analyticsRecord"
+        }
+      },
+      "triggerId": {
+        "key": "triggerId",
+        "value": {
+          "stringValue": "private_trigger/cl-getApiCount-to-BQ_Private_1"
+        }
+      },
+      "aggregatorParameterMapping": {
+        "key": "aggregatorParameterMapping"
+      },
+      "loopMetadata": {
+        "key": "loopMetadata",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_4_loopMetadata`$"]
+          }
+        }
+      },
+      "disableEucPropagation": {
+        "key": "disableEucPropagation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "listToIterate": {
+        "key": "listToIterate",
+        "value": {
+          "stringValue": "$analyticsData.data$"
+        }
+      },
+      "workflowName": {
+        "key": "workflowName",
+        "value": {
+          "stringValue": "cl-getApiCount-to-bq"
+        }
+      },
+      "requestParameterMapping": {
+        "key": "requestParameterMapping",
+        "value": {
+        }
+      },
+      "overrideParameterMapping": {
+        "key": "overrideParameterMapping"
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "For Each Deployment",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 112,
+      "y": 290
+    }
+  }, {
+    "task": "GenericConnectorTask",
+    "taskId": "5",
+    "parameters": {
+      "filterClause": {
+        "key": "filterClause",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "entityType": {
+        "key": "entityType",
+        "value": {
+          "stringValue": "ApigeeTrafficUsage"
+        }
+      },
+      "executeQueryRequestConfig": {
+        "key": "executeQueryRequestConfig"
+      },
+      "entityId": {
+        "key": "entityId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "connectorOutputPayload": {
+        "key": "connectorOutputPayload",
+        "value": {
+          "stringValue": "$`Task_5_connectorOutputPayload`$"
+        }
+      },
+      "listEntitiesSortByColumns": {
+        "key": "listEntitiesSortByColumns",
+        "value": {
+          "stringArray": {
+          }
+        }
+      },
+      "listEntitiesPageToken": {
+        "key": "listEntitiesPageToken",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "connectorInputPayload": {
+        "key": "connectorInputPayload",
+        "value": {
+          "stringValue": "$`Task_5_connectorInputPayload`$"
+        }
+      },
+      "listEntitiesPageSize": {
+        "key": "listEntitiesPageSize",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "connectionName": {
+        "key": "connectionName",
+        "value": {
+          "stringValue": "$`CONFIG_CONN_NAME`$"
+        }
+      },
+      "operation": {
+        "key": "operation",
+        "value": {
+          "stringValue": "CREATE_ENTITY"
+        }
+      },
+      "config": {
+        "key": "config"
+      },
+      "connectionVersion": {
+        "key": "connectionVersion",
+        "value": {
+          "stringValue": "projects/__PROJECT__/locations/global/providers/gcp/connectors/bigquery/versions/1"
+        }
+      },
+      "actionName": {
+        "key": "actionName",
+        "value": {
+          "stringValue": ""
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Write to Apigee Analytics to BQ",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 536,
+      "y": 290
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "6",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"API\"\n          }\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$triggerType$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "1"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Init Trigger Type API",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": -112,
+      "y": -16
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "7",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"SCHEDULE\"\n          }\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$triggerType$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "1"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Init Trigger Type SCHEDULE",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 240,
+      "y": -16
+    }
+  }],
+  "integrationParameters": [{
+    "key": "`Task_1_executionIds`",
+    "dataType": "STRING_ARRAY",
+    "displayName": "`Task_1_executionIds`",
+    "isTransient": true,
+    "producer": "1_1"
+  }, {
+    "key": "`Task_4_loopMetadata`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_4_loopMetadata`",
+    "isTransient": true,
+    "producer": "1_4"
+  }, {
+    "key": "OrganizationList",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"organizations\": [\"org1\", \"org2\"]\n}"
+    },
+    "displayName": "OrganizationList",
+    "inputOutputType": "IN",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"organizations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
+  }, {
+    "key": "date_local",
+    "dataType": "STRING_VALUE",
+    "displayName": "date_local"
+  }, {
+    "key": "listOrgEnvPDU",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"data\": [{\n    \"organization\": \"apigee-dummy-org\",\n    \"env\": \"eval\",\n    \"monthYear\": \"42024\",\n    \"proxy\": \"gemini-weather-api-demo\",\n    \"count\": 2302.0\n  }, {\n    \"organization\": \"apigee-dummy-org\",\n    \"env\": \"eval\",\n    \"monthYear\": \"42024\",\n    \"proxy\": \"hello-world\",\n    \"count\": 19.0\n  }]\n}"
+    },
+    "displayName": "listOrgEnvPDU",
+    "inputOutputType": "OUT",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"proxy\": {\n            \"type\": \"string\"\n          },\n          \"monthYear\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          },\n          \"count\": {\n            \"type\": \"number\"\n          },\n          \"env\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "analyticsData",
+    "dataType": "JSON_VALUE",
+    "displayName": "analyticsData",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"proxy\": {\n            \"type\": \"string\"\n          },\n          \"monthYear\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          },\n          \"count\": {\n            \"type\": \"number\"\n          },\n          \"env\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "`Task_5_connectorInputPayload`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_5_connectorInputPayload`",
+    "producer": "1_5",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"date\": {\n      \"type\": \"string\"\n    },\n    \"organization\": {\n      \"type\": \"string\"\n    },\n    \"environment\": {\n      \"type\": \"string\"\n    },\n    \"proxy\": {\n      \"type\": \"string\"\n    },\n    \"count\": {\n      \"type\": \"integer\"\n    }\n  }\n}"
+  }, {
+    "key": "`Task_5_connectorOutputPayload`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_5_connectorOutputPayload`",
+    "isTransient": true,
+    "producer": "1_5"
+  }, {
+    "key": "analyticsRecord",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"organization\": \"sampleorg\",\n  \"env\": \"eval\",\n  \"monthYear\": \"42024\",\n  \"proxy\": \"gemini-weather-api-demo\",\n  \"count\": 2302.0\n}"
+    },
+    "displayName": "analyticsRecord",
+    "inputOutputType": "IN",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"proxy\": {\n      \"type\": \"string\"\n    },\n    \"monthYear\": {\n      \"type\": \"string\"\n    },\n    \"organization\": {\n      \"type\": \"string\"\n    },\n    \"count\": {\n      \"type\": \"number\"\n    },\n    \"env\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+  }, {
+    "key": "startDate",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "04/01/2024 00:00"
+    },
+    "displayName": "startDate",
+    "inputOutputType": "IN"
+  }, {
+    "key": "triggerType",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "API"
+    },
+    "displayName": "triggerType",
+    "inputOutputType": "IN"
+  }],
+  "databasePersistencePolicy": "DATABASE_PERSISTENCE_DISABLED",
+  "cloudLoggingDetails": {
+    "cloudLoggingSeverity": "CLOUD_LOGGING_SEVERITY_UNSPECIFIED",
+    "enableCloudLogging": false
+  },
+  
+  "integrationConfigParameters": [{
+    "parameter": {
+      "key": "`CONFIG_CONN_NAME`",
+      "dataType": "STRING_VALUE",
+      "defaultValue": {
+        "stringValue": "projects/__PROJECT__/locations/__REGION__/connections/cl-getapicount-to-bq-tf"
+      },
+      "displayName": "`CONFIG_CONN_NAME`"
+    },
+    "value": {
+      "stringValue": "projects/__PROJECT__/locations/__REGION__/connections/cl-getapicount-to-bq-tf"
+    }
+  },
+  {
+    "parameter": {
+      "key": "`CONFIG_CONNECTOR_VERSION`",
+      "dataType": "STRING_VALUE",
+      "defaultValue": {
+        "stringValue": "projects/__PROJECT__/locations/global/providers/gcp/connectors/bigquery/versions/1"
+      },
+      "displayName": "`CONFIG_CONNECTOR_VERSION`"
+    },
+    "value": {
+      "stringValue": "projects/__PROJECT__/locations/global/providers/gcp/connectors/bigquery/versions/1"
+    }
+  }
+]
+}

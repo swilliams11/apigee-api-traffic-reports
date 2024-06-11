@@ -1,0 +1,992 @@
+{
+  "description": "Get PDU from Organizations list",
+  "databasePersistencePolicy": "DATABASE_PERSISTENCE_POLICY_UNSPECIFIED",
+  "triggerConfigs": [{
+    "label": "For Each Analytics Month",
+    "startTasks": [{
+      "taskId": "17"
+    }],
+    "properties": {
+      "Trigger name": "cl-getApiCount_Private_Analytics_Month"
+    },
+    "triggerType": "PRIVATE_TRIGGER",
+    "triggerNumber": "7",
+    "triggerId": "private_trigger/cl-getApiCount_Private_Analytics_Month",
+    "position": {
+      "x": 960,
+      "y": 42
+    }
+  }, {
+    "label": "For Each Organization",
+    "startTasks": [{
+      "taskId": "1"
+    }],
+    "properties": {
+      "Trigger name": "cl-getAPICount_Private_1"
+    },
+    "triggerType": "PRIVATE_TRIGGER",
+    "triggerNumber": "4",
+    "triggerId": "private_trigger/cl-getAPICount_Private_1",
+    "position": {
+      "x": 1384,
+      "y": 42
+    }
+  }, {
+    "label": "API Trigger",
+    "startTasks": [{
+      "taskId": "4"
+    }],
+    "properties": {
+      "Trigger name": "cl-getAPICount_1"
+    },
+    "triggerType": "API",
+    "triggerNumber": "6",
+    "triggerId": "api_trigger/cl-getAPICount_1",
+    "position": {
+      "x": 112,
+      "y": 42
+    }
+  }, {
+    "label": "For Each Environment",
+    "startTasks": [{
+      "taskId": "26",
+      "condition": "$useUpdatedJS$ \u003d true",
+      "displayName": "useUpdatedJS"
+    }, {
+      "taskId": "19",
+      "condition": "$useUpdatedJS$ \u003d false"
+    }],
+    "properties": {
+      "Trigger name": "cl-getAPICount_Private_2"
+    },
+    "triggerType": "PRIVATE_TRIGGER",
+    "triggerNumber": "5",
+    "triggerId": "private_trigger/cl-getAPICount_Private_2",
+    "position": {
+      "x": 544,
+      "y": 48
+    }
+  }],
+  "taskConfigs": [{
+    "task": "GenericRestV2Task",
+    "taskId": "1",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_1_responseBody`$"]
+          }
+        }
+      },
+      "disableSSLValidation": {
+        "key": "disableSSLValidation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "authConfigName": {
+        "key": "authConfigName",
+        "value": {
+          "stringValue": "apigee-app-int-profilev2"
+        }
+      },
+      "httpParams": {
+        "key": "httpParams"
+      },
+      "authConfig": {
+        "key": "authConfig",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.authconfig.AuthConfigTaskParam\"\n}"
+        }
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_1_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "GET"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_1_responseStatus`$"]
+          }
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "$apigee_host$/v1/organizations/$orgInputForAnalytics$/environments"
+        }
+      },
+      "useSSL": {
+        "key": "useSSL",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings"
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "jsonAdditionalHeaders": {
+        "key": "jsonAdditionalHeaders",
+        "value": {
+          "jsonValue": "null"
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "2"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Get env list",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1384,
+      "y": 166
+    }
+  }, {
+    "task": "SubWorkflowForEachLoopV2Task",
+    "taskId": "11",
+    "parameters": {
+      "iterationElementMapping": {
+        "key": "iterationElementMapping",
+        "value": {
+          "stringValue": "orgInputForAnalytics"
+        }
+      },
+      "triggerId": {
+        "key": "triggerId",
+        "value": {
+          "stringValue": "private_trigger/cl-getAPICount_Private_1"
+        }
+      },
+      "aggregatorParameterMapping": {
+        "key": "aggregatorParameterMapping"
+      },
+      "loopMetadata": {
+        "key": "loopMetadata",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_11_loopMetadata`$"]
+          }
+        }
+      },
+      "disableEucPropagation": {
+        "key": "disableEucPropagation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "listToIterate": {
+        "key": "listToIterate",
+        "value": {
+          "stringValue": "$OrganizationList.organizations$"
+        }
+      },
+      "workflowName": {
+        "key": "workflowName",
+        "value": {
+          "stringValue": "cl-getApiCount"
+        }
+      },
+      "requestParameterMapping": {
+        "key": "requestParameterMapping",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutput\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForOrg\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"triggerType\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"triggerTypeForOrg\"\n      }\n    }\n  }]\n}"
+        }
+      },
+      "overrideParameterMapping": {
+        "key": "overrideParameterMapping",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForOrg\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutput\"\n      }\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "For Each Organization",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 112,
+      "y": 414
+    }
+  }, {
+    "task": "GenericRestV2Task",
+    "taskId": "17",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_17_responseBody`$"]
+          }
+        }
+      },
+      "disableSSLValidation": {
+        "key": "disableSSLValidation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "httpParams": {
+        "key": "httpParams"
+      },
+      "authConfigName": {
+        "key": "authConfigName",
+        "value": {
+          "stringValue": "apigee-app-int-analytics-profile"
+        }
+      },
+      "authConfig": {
+        "key": "authConfig",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.authconfig.AuthConfigTaskParam\"\n}"
+        }
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_17_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "GET"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_17_responseStatus`$"]
+          }
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "$apigee_host$/v1/organizations/$orgInputForAnalyticsMonth$/environments/$envInputForAnalyticsMonth$/optimizedStats/apiproxy"
+        }
+      },
+      "useSSL": {
+        "key": "useSSL",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"select\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"sum(message_count)\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"timeRange\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$analyticsTimeRangeQueryParam$\"\n    }\n  }]\n}"
+        }
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "jsonAdditionalHeaders": {
+        "key": "jsonAdditionalHeaders",
+        "value": {
+          "jsonValue": "null"
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "23"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Get count analytics data",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 960,
+      "y": 166
+    }
+  }, {
+    "task": "SubWorkflowForEachLoopV2Task",
+    "taskId": "18",
+    "parameters": {
+      "iterationElementMapping": {
+        "key": "iterationElementMapping",
+        "value": {
+          "stringValue": "analyticsTimeRangeQueryParam"
+        }
+      },
+      "triggerId": {
+        "key": "triggerId",
+        "value": {
+          "stringValue": "private_trigger/cl-getApiCount_Private_Analytics_Month"
+        }
+      },
+      "aggregatorParameterMapping": {
+        "key": "aggregatorParameterMapping"
+      },
+      "loopMetadata": {
+        "key": "loopMetadata",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_18_loopMetadata`$"]
+          }
+        }
+      },
+      "disableEucPropagation": {
+        "key": "disableEucPropagation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "listToIterate": {
+        "key": "listToIterate",
+        "value": {
+          "stringValue": "$analyticsDatesArray.dates$"
+        }
+      },
+      "workflowName": {
+        "key": "workflowName",
+        "value": {
+          "stringValue": "cl-getApiCount"
+        }
+      },
+      "requestParameterMapping": {
+        "key": "requestParameterMapping",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"orgInputForEnv\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"orgInputForAnalyticsMonth\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"envInputForAnalytics\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"envInputForAnalyticsMonth\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForEnv\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForMonthLoop\"\n      }\n    }\n  }]\n}"
+        }
+      },
+      "overrideParameterMapping": {
+        "key": "overrideParameterMapping",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForMonthLoop\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForEnv\"\n      }\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "For Each Analytics Month",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 576,
+      "y": 464
+    }
+  }, {
+    "task": "JavaScriptTask",
+    "taskId": "19",
+    "parameters": {
+      "script": {
+        "key": "script",
+        "value": {
+          "stringValue": "\n/**\n * Function that is called during the JavaScript Task execution.\n * @param {IntegrationEvent} event\n */\nfunction executeScript(event) {\n    var startDateInput \u003d event.getParameter(\"startDateTimeInput\");\n    var now1 \u003d new Date(Date.now());\n    //var nowMonth \u003d now1.getMonth() + 1;\n    event.log(\"startDate: \" + startDateInput + \"; now1: \" + now1 + \"; now1.getMonth(): \" + now1.getMonth());\n    var startDate \u003d new Date(startDateInput);\n    //var startDateMonth \u003d startDate.getMonth() + 1;\n    var resp \u003d {\"dates\": []};\n    if(now1.getMonth() \u003d\u003d startDate.getMonth()){\n        lastDateOfMonth \u003d lastDayOfMonthDate(startDate.getFullYear(), startDate.getMonth());\n        resp.dates \u003d [calcStartAndEndDates(startDate.getFullYear(), startDate.getMonth())]\n        event.log(resp);\n        event.setParameter(\"analyticsDatesArray\", resp);\n    } else {\n        var lastMonth \u003d now1.getMonth() - startDate.getMonth();\n        lastMonth +\u003d startDate.getMonth();\n        event.log(startDate.getFullYear() + \"-\" + startDate.getMonth());\n        for(var currentMonth \u003d startDate.getMonth(); currentMonth \u003c\u003d lastMonth; currentMonth++){\n            //var startEndDateToAdd \u003d calcStartAndEndDates(startDate.getFullYear(), startDate.getMonth(), event);\n            var startEndDateToAdd \u003d calcStartAndEndDates(startDate.getFullYear(), currentMonth, event);\n            resp.dates.push(startEndDateToAdd);\n            event.log(\"adding...\" + startEndDateToAdd);\n        }\n        event.setParameter(\"analyticsDatesArray\", resp);\n        event.log(\"final array: \" + JSON.stringify(resp));\n    } \n}\n\nfunction lastDayOfMonthDate(year, month){\n    //add 1 to the month because getMonth is 0 - 11\n    return new Date(year, month + 1, 0);\n}\n\nfunction calcStartAndEndDates(year, month, event){\n    event.log(\"calcStartAndEndDates(year:\" + year + \", month:\" + month + \")\");\n    var start \u003d new Date(year, month, 1);\n    var end \u003d  new Date(year, month + 1, 0);\n    var startDate \u003d start.getMonth() + 1 + \"/\" + start.getDate() + \"/\" + start.getFullYear() + \" 00:00\";\n    var endDate \u003d end.getMonth() + 1 + \"/\" + end.getDate() + \"/\" + end.getFullYear() + \" 23:59\";\n    return startDate + \"~\" + endDate;\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "18"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "JavaScriptGetMonths",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 704,
+      "y": 288
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "2",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_1_responseBody`$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"TO_JSON\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$envList$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "3"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Convert Env list to JSON",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1384,
+      "y": 290
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "20",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_17_responseBody`$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"TO_JSON\"\n            }\n          }\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"Response.stats.data\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$apigeeAnalyticsMetricsDataArray$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "21"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Data Mapping",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 960,
+      "y": 538
+    }
+  }, {
+    "task": "JavaScriptTask",
+    "taskId": "21",
+    "parameters": {
+      "script": {
+        "key": "script",
+        "value": {
+          "stringValue": "\n/**\n * Function that is called during the JavaScript Task execution.\n * Converts the Apigee Mgmt API analytics data into a format that can be saved into BQ\n * @param {IntegrationEvent} event\n */\nfunction executeScript(event) {\n    var analyticsData \u003d event.getParameter(\"apigeeAnalyticsMetricsDataArray\"); // json array\n    var analyticsDataOutputForMonthLoop \u003d event.getParameter(\"analyticsDataOutputForMonthLoop\");\n    var records \u003d {\"data\": []};\n    \n    // var analyticsDataOutput \u003d event.getParameter(\"analyticsDataOutput\"); //json\n    // if(analyticsDataOutput \u003d\u003d undefined || analyticsDataOutput \u003d\u003d null){\n    //     event.log(\"Initializing the analyticsDataOutput variable!\");\n    //     analyticsDataOutput \u003d {\"data\": []};\n    // }\n    //analyticsDataOutput.data.concat(records.data);\n    \n    for(var i \u003d 0; i \u003c analyticsData.length; i++){\n        var record \u003d {};\n        record[\u0027organization\u0027] \u003d event.getParameter(\"orgInputForAnalyticsMonth\"); \n        record[\u0027env\u0027] \u003d event.getParameter(\"envInputForAnalyticsMonth\"); \n        record[\u0027monthYear\u0027] \u003d parseMonthYear(event.getParameter(\"analyticsTimeRangeQueryParam\"));\n        event.log(\"setting the count property to \" + analyticsData[i].identifier.values[0] + \": \" + analyticsData[i].metric[0].values[0]);\n        record[\u0027proxy\u0027] \u003d analyticsData[i].identifier.values[0];\n        record[\"count\"] \u003d analyticsData[i].metric[0].values[0];     \n        records.data.push(record); \n        //analyticsDataOutput.data.push(record);\n        analyticsDataOutputForMonthLoop.data.push(record);\n    }\n    event.setParameter(\"analyticsApiCountSummary\", records);\n    event.setParameter(\"analyticsDataOutputForMonthLoop\", analyticsDataOutputForMonthLoop);\n    //event.setParameter(\"analyticsDataOutput\", analyticsDataOutput);\n}\n\nfunction parseMonthYear(timeRange){\n    var parsed \u003d timeRange.split(\"~\"); // split between the start date and end date\n    parsed \u003d parsed[0].split(\" \"); //split between the start date and start time\n    var startDate \u003d new Date(parsed[0]); //get the start date\n    return startDate.getMonth() + 1 + \"\" + startDate.getFullYear();\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "22",
+      "condition": "$shouldAppendToList$ \u003d True",
+      "displayName": "shouldAppendToList"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "JavaScript Aggregate Analytics Stats by proxy",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 960,
+      "y": 662
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "22",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$analyticsApiCountSummary.data$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"FOR_EACH\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"protoValue\": {\n                  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.TransformExpression\",\n                  \"initialValue\": {\n                    \"referenceValue\": \"$analyticsDataOutputForMonthLoop.data$\"\n                  },\n                  \"transformationFunctions\": [{\n                    \"functionType\": {\n                      \"jsonFunction\": {\n                        \"functionName\": \"APPEND_ELEMENT\"\n                      }\n                    },\n                    \"parameters\": [{\n                      \"initialValue\": {\n                        \"referenceValue\": \"~x\"\n                      }\n                    }]\n                  }]\n                }\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$analyticsApiCountSummary.data$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$analyticsDataOutputForMonthLoop$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"SET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"data\"\n              }\n            }\n          }, {\n            \"initialValue\": {\n              \"referenceValue\": \"$analyticsApiCountSummary.data$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$analyticsDataOutputForMonthLoop$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Append To List",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 960,
+      "y": 786
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "23",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_17_responseBody`$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"TO_JSON\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$responseBodyForOptimizedAnalyticsRequest$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "25"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "saveAnalyticsResponse",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 960,
+      "y": 290
+    }
+  }, {
+    "task": "JavaScriptTask",
+    "taskId": "25",
+    "parameters": {
+      "script": {
+        "key": "script",
+        "value": {
+          "stringValue": "\n/**\n * Function that is called during the JavaScript Task execution.\n * @param {IntegrationEvent} event\n */\nfunction executeScript(event) {\n    var analytics \u003d event.getParameter(\"responseBodyForOptimizedAnalyticsRequest\");\n    event.log(JSON.stringify(analytics));\n    var isEmpty \u003d false;\n    if(analytics.Response.stats \u003d\u003d undefined){\n        isEmpty \u003d true;\n    } else {\n        isEmpty \u003d false;\n    }\n    event.setParameter(\u0027isEmpty\u0027, isEmpty);\n    event.log(event.getParameter(\u0027isEmpty\u0027));\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "20",
+      "condition": "$isEmpty$ \u003d false",
+      "displayName": "isEmpty"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "JavaScriptIsEmpty",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 960,
+      "y": 414
+    }
+  }, {
+    "task": "JavaScriptTask",
+    "taskId": "26",
+    "parameters": {
+      "script": {
+        "key": "script",
+        "value": {
+          "stringValue": "\n/**\n * Function that is called during the JavaScript Task execution.\n * If the API Trigger is API then it will include a start date and that start date will be the MM/DD/YYYY of the when to start fetching the analytics data.\n * If the Trigger is a schedule, then the startDateInput will be the current date. Then this trigger will get the prior day between 00:00 and 23:59 and get all\n * traffic across all org for that day.  \n * @param {IntegrationEvent} event\n * startDateInput format is MM/DD/YYYY\n */\nfunction executeScript(event) {\n    // Now you can use Moment.js\n    const now \u003d moment();\n    var startDateInput \u003d event.getParameter(\"startDateInput\");\n    event.log(startDateInput);\n    const triggerType \u003d event.getParameter(\u0027triggerTypeForEnv\u0027); // Get the type of trigger\n    var analyticsDatesArray \u003d {\"dates\": []};\n\n    if (triggerType \u003d\u003d\u003d \u0027API\u0027) {\n      event.log(\"Trigger Type: API\");\n        // Access properties of the API trigger (headers, method, path, etc.)\n        //get the start date of the month.\n        var startDateMomemt \u003d moment(startDateInput, \u0027MM/DD/YYYY\u0027).startOf(\u0027month\u0027);\n        var endDateMoment \u003d moment().endOf(\u0027month\u0027);\n        var diffInMonths \u003d getMonthsDiff(startDateMomemt, endDateMoment);\n        var startEndDates \u003d getMonthStartEndDates(startDateMomemt, diffInMonths);\n        analyticsDatesArray.dates \u003d startEndDates;\n        event.setParameter(\u0027analyticsDatesArray\u0027, analyticsDatesArray);\n        event.log(\u0027final array: \u0027 + JSON.stringify(analyticsDatesArray));\n    } else if (triggerType \u003d\u003d\u003d \u0027SCHEDULE\u0027) {\n      event.log(\"Trigger Type: SCHEDULE\");\n        var priorDay \u003d moment(startDateInput, \u0027MM/DD/YYYY\u0027).subtract(1, \u0027days\u0027);\n        event.log(priorDay.format(\u0027MM/DD/YYYY\u0027));\n        var startDateTime \u003d priorDay.startOf(\u0027day\u0027).format(\u0027MM/DD/YYYY HH:mm\u0027);\n        var endDateTime \u003d priorDay.endOf(\u0027day\u0027).format(\u0027MM/DD/YYYY HH:mm\u0027);\n        var analyticsDatesArray \u003d {\"dates\": []};\n        event.log(startDateTime + \u0027~\u0027 + endDateTime);\n        analyticsDatesArray.dates.push(startDateTime + \u0027~\u0027 + endDateTime);\n        event.setParameter(\u0027analyticsDatesArray\u0027, analyticsDatesArray);\n    } else {\n        // return an error here\n    }\n}\n\nfunction getMonthsDiff(startDate, endDate) {\n  /**\n   * Calculates the correct number of months between two dates.  \n   */\n  const yearsDiff \u003d endDate.year() - startDate.year();\n  const monthsDiff \u003d endDate.month() - startDate.month();\n  return yearsDiff * 12 + monthsDiff;\n}\n\nfunction getMonthStartEndDates(startDate, numMonths) {\n/**\n * This function gets the start and endDates as a JSON array for an entire time period.\n * So if you enter 4/15/2024 and numMonths \u003d 20, the it will use a start date of\n * 4/1/2024 and get the starting day of the month and the ending day of the month for the next 12 months.\n * i.e. [\"4/1/2024 00:00~4/31/2024 23:59\",... , \"4/1/2025 00:00~4/31/2025 23:59\"]\n * \n * @param startDate is moment.\n * @param numMonths is integer\n * returns an array of String with the start and end times;\n */\n  var monthStartEndDates \u003d [];\n\n  for (var i \u003d 0; i \u003c numMonths; i++) {\n    var startDateTime \u003d startDate.startOf(\u0027month\u0027).format(\u0027MM/DD/YYYY HH:mm\u0027);\n    var endDateTime \u003d startDate.endOf(\u0027month\u0027).format(\u0027MM/DD/YYYY HH:mm\u0027);\n    monthStartEndDates.push(startDateTime + \u0027~\u0027 + endDateTime);\n    startDate.add(1, \u0027month\u0027); // Move to the next month\n  }\n\n  return monthStartEndDates;\n}\n\n/**\n * This is the moment.js minified code as of 5/31/2024\n */\n!function(e,t){\"object\"\u003d\u003dtypeof exports\u0026\u0026\"undefined\"!\u003dtypeof module?module.exports\u003dt():\"function\"\u003d\u003dtypeof define\u0026\u0026define.amd?define(t):e.moment\u003dt()}(this,function(){\"use strict\";var H;function _(){return H.apply(null,arguments)}function y(e){return e instanceof Array||\"[object Array]\"\u003d\u003d\u003dObject.prototype.toString.call(e)}function F(e){return null!\u003de\u0026\u0026\"[object Object]\"\u003d\u003d\u003dObject.prototype.toString.call(e)}function c(e,t){return Object.prototype.hasOwnProperty.call(e,t)}function L(e){if(Object.getOwnPropertyNames)return 0\u003d\u003d\u003dObject.getOwnPropertyNames(e).length;for(var t in e)if(c(e,t))return;return 1}function g(e){return void 0\u003d\u003d\u003de}function w(e){return\"number\"\u003d\u003dtypeof e||\"[object Number]\"\u003d\u003d\u003dObject.prototype.toString.call(e)}function V(e){return e instanceof Date||\"[object Date]\"\u003d\u003d\u003dObject.prototype.toString.call(e)}function G(e,t){for(var n\u003d[],s\u003de.length,i\u003d0;i\u003cs;++i)n.push(t(e[i],i));return n}function E(e,t){for(var n in t)c(t,n)\u0026\u0026(e[n]\u003dt[n]);return c(t,\"toString\")\u0026\u0026(e.toString\u003dt.toString),c(t,\"valueOf\")\u0026\u0026(e.valueOf\u003dt.valueOf),e}function l(e,t,n,s){return Wt(e,t,n,s,!0).utc()}function p(e){return null\u003d\u003de._pf\u0026\u0026(e._pf\u003d{empty:!1,unusedTokens:[],unusedInput:[],overflow:-2,charsLeftOver:0,nullInput:!1,invalidEra:null,invalidMonth:null,invalidFormat:!1,userInvalidated:!1,iso:!1,parsedDateParts:[],era:null,meridiem:null,rfc2822:!1,weekdayMismatch:!1}),e._pf}function A(e){var t,n,s\u003de._d\u0026\u0026!isNaN(e._d.getTime());return s\u0026\u0026(t\u003dp(e),n\u003dj.call(t.parsedDateParts,function(e){return null!\u003de}),s\u003dt.overflow\u003c0\u0026\u0026!t.empty\u0026\u0026!t.invalidEra\u0026\u0026!t.invalidMonth\u0026\u0026!t.invalidWeekday\u0026\u0026!t.weekdayMismatch\u0026\u0026!t.nullInput\u0026\u0026!t.invalidFormat\u0026\u0026!t.userInvalidated\u0026\u0026(!t.meridiem||t.meridiem\u0026\u0026n),e._strict)\u0026\u0026(s\u003ds\u0026\u00260\u003d\u003d\u003dt.charsLeftOver\u0026\u00260\u003d\u003d\u003dt.unusedTokens.length\u0026\u0026void 0\u003d\u003d\u003dt.bigHour),null!\u003dObject.isFrozen\u0026\u0026Object.isFrozen(e)?s:(e._isValid\u003ds,e._isValid)}function I(e){var t\u003dl(NaN);return null!\u003de?E(p(t),e):p(t).userInvalidated\u003d!0,t}var j\u003dArray.prototype.some||function(e){for(var t\u003dObject(this),n\u003dt.length\u003e\u003e\u003e0,s\u003d0;s\u003cn;s++)if(s in t\u0026\u0026e.call(this,t[s],s,t))return!0;return!1},Z\u003d_.momentProperties\u003d[],z\u003d!1;function q(e,t){var n,s,i,r\u003dZ.length;if(g(t._isAMomentObject)||(e._isAMomentObject\u003dt._isAMomentObject),g(t._i)||(e._i\u003dt._i),g(t._f)||(e._f\u003dt._f),g(t._l)||(e._l\u003dt._l),g(t._strict)||(e._strict\u003dt._strict),g(t._tzm)||(e._tzm\u003dt._tzm),g(t._isUTC)||(e._isUTC\u003dt._isUTC),g(t._offset)||(e._offset\u003dt._offset),g(t._pf)||(e._pf\u003dp(t)),g(t._locale)||(e._locale\u003dt._locale),0\u003cr)for(n\u003d0;n\u003cr;n++)g(i\u003dt[s\u003dZ[n]])||(e[s]\u003di);return e}function $(e){q(this,e),this._d\u003dnew Date(null!\u003de._d?e._d.getTime():NaN),this.isValid()||(this._d\u003dnew Date(NaN)),!1\u003d\u003d\u003dz\u0026\u0026(z\u003d!0,_.updateOffset(this),z\u003d!1)}function k(e){return e instanceof $||null!\u003de\u0026\u0026null!\u003de._isAMomentObject}function B(e){!1\u003d\u003d\u003d_.suppressDeprecationWarnings\u0026\u0026\"undefined\"!\u003dtypeof console\u0026\u0026console.warn\u0026\u0026console.warn(\"Deprecation warning: \"+e)}function e(r,a){var o\u003d!0;return E(function(){if(null!\u003d_.deprecationHandler\u0026\u0026_.deprecationHandler(null,r),o){for(var e,t,n\u003d[],s\u003darguments.length,i\u003d0;i\u003cs;i++){if(e\u003d\"\",\"object\"\u003d\u003dtypeof arguments[i]){for(t in e+\u003d\"\\n[\"+i+\"] \",arguments[0])c(arguments[0],t)\u0026\u0026(e+\u003dt+\": \"+arguments[0][t]+\", \");e\u003de.slice(0,-2)}else e\u003darguments[i];n.push(e)}B(r+\"\\nArguments: \"+Array.prototype.slice.call(n).join(\"\")+\"\\n\"+(new Error).stack),o\u003d!1}return a.apply(this,arguments)},a)}var J\u003d{};function Q(e,t){null!\u003d_.deprecationHandler\u0026\u0026_.deprecationHandler(e,t),J[e]||(B(t),J[e]\u003d!0)}function a(e){return\"undefined\"!\u003dtypeof Function\u0026\u0026e instanceof Function||\"[object Function]\"\u003d\u003d\u003dObject.prototype.toString.call(e)}function X(e,t){var n,s\u003dE({},e);for(n in t)c(t,n)\u0026\u0026(F(e[n])\u0026\u0026F(t[n])?(s[n]\u003d{},E(s[n],e[n]),E(s[n],t[n])):null!\u003dt[n]?s[n]\u003dt[n]:delete s[n]);for(n in e)c(e,n)\u0026\u0026!c(t,n)\u0026\u0026F(e[n])\u0026\u0026(s[n]\u003dE({},s[n]));return s}function K(e){null!\u003de\u0026\u0026this.set(e)}_.suppressDeprecationWarnings\u003d!1,_.deprecationHandler\u003dnull;var ee\u003dObject.keys||function(e){var t,n\u003d[];for(t in e)c(e,t)\u0026\u0026n.push(t);return n};function r(e,t,n){var s\u003d\"\"+Math.abs(e);return(0\u003c\u003de?n?\"+\":\"\":\"-\")+Math.pow(10,Math.max(0,t-s.length)).toString().substr(1)+s}var te\u003d/(\\[[^\\[]*\\])|(\\\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|N{1,5}|YYYYYY|YYYYY|YYYY|YY|y{2,4}|yo?|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g,ne\u003d/(\\[[^\\[]*\\])|(\\\\)?(LTS|LT|LL?L?L?|l{1,4})/g,se\u003d{},ie\u003d{};function s(e,t,n,s){var i\u003d\"string\"\u003d\u003dtypeof s?function(){return this[s]()}:s;e\u0026\u0026(ie[e]\u003di),t\u0026\u0026(ie[t[0]]\u003dfunction(){return r(i.apply(this,arguments),t[1],t[2])}),n\u0026\u0026(ie[n]\u003dfunction(){return this.localeData().ordinal(i.apply(this,arguments),e)})}function re(e,t){return e.isValid()?(t\u003dae(t,e.localeData()),se[t]\u003dse[t]||function(s){for(var e,i\u003ds.match(te),t\u003d0,r\u003di.length;t\u003cr;t++)ie[i[t]]?i[t]\u003die[i[t]]:i[t]\u003d(e\u003di[t]).match(/\\[[\\s\\S]/)?e.replace(/^\\[|\\]$/g,\"\"):e.replace(/\\\\/g,\"\");return function(e){for(var t\u003d\"\",n\u003d0;n\u003cr;n++)t+\u003da(i[n])?i[n].call(e,s):i[n];return t}}(t),se[t](e)):e.localeData().invalidDate()}function ae(e,t){var n\u003d5;function s(e){return t.longDateFormat(e)||e}for(ne.lastIndex\u003d0;0\u003c\u003dn\u0026\u0026ne.test(e);)e\u003de.replace(ne,s),ne.lastIndex\u003d0,--n;return e}var oe\u003d{D:\"date\",dates:\"date\",date:\"date\",d:\"day\",days:\"day\",day:\"day\",e:\"weekday\",weekdays:\"weekday\",weekday:\"weekday\",E:\"isoWeekday\",isoweekdays:\"isoWeekday\",isoweekday:\"isoWeekday\",DDD:\"dayOfYear\",dayofyears:\"dayOfYear\",dayofyear:\"dayOfYear\",h:\"hour\",hours:\"hour\",hour:\"hour\",ms:\"millisecond\",milliseconds:\"millisecond\",millisecond:\"millisecond\",m:\"minute\",minutes:\"minute\",minute:\"minute\",M:\"month\",months:\"month\",month:\"month\",Q:\"quarter\",quarters:\"quarter\",quarter:\"quarter\",s:\"second\",seconds:\"second\",second:\"second\",gg:\"weekYear\",weekyears:\"weekYear\",weekyear:\"weekYear\",GG:\"isoWeekYear\",isoweekyears:\"isoWeekYear\",isoweekyear:\"isoWeekYear\",w:\"week\",weeks:\"week\",week:\"week\",W:\"isoWeek\",isoweeks:\"isoWeek\",isoweek:\"isoWeek\",y:\"year\",years:\"year\",year:\"year\"};function o(e){return\"string\"\u003d\u003dtypeof e?oe[e]||oe[e.toLowerCase()]:void 0}function ue(e){var t,n,s\u003d{};for(n in e)c(e,n)\u0026\u0026(t\u003do(n))\u0026\u0026(s[t]\u003de[n]);return s}var le\u003d{date:9,day:11,weekday:11,isoWeekday:11,dayOfYear:4,hour:13,millisecond:16,minute:14,month:8,quarter:7,second:15,weekYear:1,isoWeekYear:1,week:5,isoWeek:5,year:1};var de\u003d/\\d/,t\u003d/\\d\\d/,he\u003d/\\d{3}/,ce\u003d/\\d{4}/,fe\u003d/[+-]?\\d{6}/,n\u003d/\\d\\d?/,me\u003d/\\d\\d\\d\\d?/,_e\u003d/\\d\\d\\d\\d\\d\\d?/,ye\u003d/\\d{1,3}/,ge\u003d/\\d{1,4}/,we\u003d/[+-]?\\d{1,6}/,pe\u003d/\\d+/,ke\u003d/[+-]?\\d+/,Me\u003d/Z|[+-]\\d\\d:?\\d\\d/gi,ve\u003d/Z|[+-]\\d\\d(?::?\\d\\d)?/gi,i\u003d/[0-9]{0,256}[\u0027a-z\\u00A0-\\u05FF\\u0700-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFF07\\uFF10-\\uFFEF]{1,256}|[\\u0600-\\u06FF\\/]{1,256}(\\s*?[\\u0600-\\u06FF]{1,256}){1,2}/i,u\u003d/^[1-9]\\d?/,d\u003d/^([1-9]\\d|\\d)/;function h(e,n,s){Ye[e]\u003da(n)?n:function(e,t){return e\u0026\u0026s?s:n}}function De(e,t){return c(Ye,e)?Ye[e](t._strict,t._locale):new RegExp(f(e.replace(\"\\\\\",\"\").replace(/\\\\(\\[)|\\\\(\\])|\\[([^\\]\\[]*)\\]|\\\\(.)/g,function(e,t,n,s,i){return t||n||s||i})))}function f(e){return e.replace(/[-\\/\\\\^$*+?.()|[\\]{}]/g,\"\\\\$\u0026\")}function m(e){return e\u003c0?Math.ceil(e)||0:Math.floor(e)}function M(e){var e\u003d+e,t\u003d0;return t\u003d0!\u003de\u0026\u0026isFinite(e)?m(e):t}var Ye\u003d{},Se\u003d{};function v(e,n){var t,s,i\u003dn;for(\"string\"\u003d\u003dtypeof e\u0026\u0026(e\u003d[e]),w(n)\u0026\u0026(i\u003dfunction(e,t){t[n]\u003dM(e)}),s\u003de.length,t\u003d0;t\u003cs;t++)Se[e[t]]\u003di}function Oe(e,i){v(e,function(e,t,n,s){n._w\u003dn._w||{},i(e,n._w,n,s)})}function be(e){return e%4\u003d\u003d0\u0026\u0026e%100!\u003d0||e%400\u003d\u003d0}var D\u003d0,Y\u003d1,S\u003d2,O\u003d3,b\u003d4,T\u003d5,Te\u003d6,xe\u003d7,Ne\u003d8;function We(e){return be(e)?366:365}s(\"Y\",0,0,function(){var e\u003dthis.year();return e\u003c\u003d9999?r(e,4):\"+\"+e}),s(0,[\"YY\",2],0,function(){return this.year()%100}),s(0,[\"YYYY\",4],0,\"year\"),s(0,[\"YYYYY\",5],0,\"year\"),s(0,[\"YYYYYY\",6,!0],0,\"year\"),h(\"Y\",ke),h(\"YY\",n,t),h(\"YYYY\",ge,ce),h(\"YYYYY\",we,fe),h(\"YYYYYY\",we,fe),v([\"YYYYY\",\"YYYYYY\"],D),v(\"YYYY\",function(e,t){t[D]\u003d2\u003d\u003d\u003de.length?_.parseTwoDigitYear(e):M(e)}),v(\"YY\",function(e,t){t[D]\u003d_.parseTwoDigitYear(e)}),v(\"Y\",function(e,t){t[D]\u003dparseInt(e,10)}),_.parseTwoDigitYear\u003dfunction(e){return M(e)+(68\u003cM(e)?1900:2e3)};var x,Pe\u003dRe(\"FullYear\",!0);function Re(t,n){return function(e){return null!\u003de?(Ue(this,t,e),_.updateOffset(this,n),this):Ce(this,t)}}function Ce(e,t){if(!e.isValid())return NaN;var n\u003de._d,s\u003de._isUTC;switch(t){case\"Milliseconds\":return s?n.getUTCMilliseconds():n.getMilliseconds();case\"Seconds\":return s?n.getUTCSeconds():n.getSeconds();case\"Minutes\":return s?n.getUTCMinutes():n.getMinutes();case\"Hours\":return s?n.getUTCHours():n.getHours();case\"Date\":return s?n.getUTCDate():n.getDate();case\"Day\":return s?n.getUTCDay():n.getDay();case\"Month\":return s?n.getUTCMonth():n.getMonth();case\"FullYear\":return s?n.getUTCFullYear():n.getFullYear();default:return NaN}}function Ue(e,t,n){var s,i,r;if(e.isValid()\u0026\u0026!isNaN(n)){switch(s\u003de._d,i\u003de._isUTC,t){case\"Milliseconds\":return i?s.setUTCMilliseconds(n):s.setMilliseconds(n);case\"Seconds\":return i?s.setUTCSeconds(n):s.setSeconds(n);case\"Minutes\":return i?s.setUTCMinutes(n):s.setMinutes(n);case\"Hours\":return i?s.setUTCHours(n):s.setHours(n);case\"Date\":return i?s.setUTCDate(n):s.setDate(n);case\"FullYear\":break;default:return}t\u003dn,r\u003de.month(),e\u003d29!\u003d\u003d(e\u003de.date())||1!\u003d\u003dr||be(t)?e:28,i?s.setUTCFullYear(t,r,e):s.setFullYear(t,r,e)}}function He(e,t){var n;return isNaN(e)||isNaN(t)?NaN:(n\u003d(t%(n\u003d12)+n)%n,e+\u003d(t-n)/12,1\u003d\u003dn?be(e)?29:28:31-n%7%2)}x\u003dArray.prototype.indexOf||function(e){for(var t\u003d0;t\u003cthis.length;++t)if(this[t]\u003d\u003d\u003de)return t;return-1},s(\"M\",[\"MM\",2],\"Mo\",function(){return this.month()+1}),s(\"MMM\",0,0,function(e){return this.localeData().monthsShort(this,e)}),s(\"MMMM\",0,0,function(e){return this.localeData().months(this,e)}),h(\"M\",n,u),h(\"MM\",n,t),h(\"MMM\",function(e,t){return t.monthsShortRegex(e)}),h(\"MMMM\",function(e,t){return t.monthsRegex(e)}),v([\"M\",\"MM\"],function(e,t){t[Y]\u003dM(e)-1}),v([\"MMM\",\"MMMM\"],function(e,t,n,s){s\u003dn._locale.monthsParse(e,s,n._strict);null!\u003ds?t[Y]\u003ds:p(n).invalidMonth\u003de});var Fe\u003d\"January_February_March_April_May_June_July_August_September_October_November_December\".split(\"_\"),Le\u003d\"Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec\".split(\"_\"),Ve\u003d/D[oD]?(\\[[^\\[\\]]*\\]|\\s)+MMMM?/,Ge\u003di,Ee\u003di;function Ae(e,t){if(e.isValid()){if(\"string\"\u003d\u003dtypeof t)if(/^\\d+$/.test(t))t\u003dM(t);else if(!w(t\u003de.localeData().monthsParse(t)))return;var n\u003d(n\u003de.date())\u003c29?n:Math.min(n,He(e.year(),t));e._isUTC?e._d.setUTCMonth(t,n):e._d.setMonth(t,n)}}function Ie(e){return null!\u003de?(Ae(this,e),_.updateOffset(this,!0),this):Ce(this,\"Month\")}function je(){function e(e,t){return t.length-e.length}for(var t,n,s\u003d[],i\u003d[],r\u003d[],a\u003d0;a\u003c12;a++)n\u003dl([2e3,a]),t\u003df(this.monthsShort(n,\"\")),n\u003df(this.months(n,\"\")),s.push(t),i.push(n),r.push(n),r.push(t);s.sort(e),i.sort(e),r.sort(e),this._monthsRegex\u003dnew RegExp(\"^(\"+r.join(\"|\")+\")\",\"i\"),this._monthsShortRegex\u003dthis._monthsRegex,this._monthsStrictRegex\u003dnew RegExp(\"^(\"+i.join(\"|\")+\")\",\"i\"),this._monthsShortStrictRegex\u003dnew RegExp(\"^(\"+s.join(\"|\")+\")\",\"i\")}function Ze(e,t,n,s,i,r,a){var o;return e\u003c100\u0026\u00260\u003c\u003de?(o\u003dnew Date(e+400,t,n,s,i,r,a),isFinite(o.getFullYear())\u0026\u0026o.setFullYear(e)):o\u003dnew Date(e,t,n,s,i,r,a),o}function ze(e){var t;return e\u003c100\u0026\u00260\u003c\u003de?((t\u003dArray.prototype.slice.call(arguments))[0]\u003de+400,t\u003dnew Date(Date.UTC.apply(null,t)),isFinite(t.getUTCFullYear())\u0026\u0026t.setUTCFullYear(e)):t\u003dnew Date(Date.UTC.apply(null,arguments)),t}function qe(e,t,n){n\u003d7+t-n;return n-(7+ze(e,0,n).getUTCDay()-t)%7-1}function $e(e,t,n,s,i){var r,t\u003d1+7*(t-1)+(7+n-s)%7+qe(e,s,i),n\u003dt\u003c\u003d0?We(r\u003de-1)+t:t\u003eWe(e)?(r\u003de+1,t-We(e)):(r\u003de,t);return{year:r,dayOfYear:n}}function Be(e,t,n){var s,i,r\u003dqe(e.year(),t,n),r\u003dMath.floor((e.dayOfYear()-r-1)/7)+1;return r\u003c1?s\u003dr+N(i\u003de.year()-1,t,n):r\u003eN(e.year(),t,n)?(s\u003dr-N(e.year(),t,n),i\u003de.year()+1):(i\u003de.year(),s\u003dr),{week:s,year:i}}function N(e,t,n){var s\u003dqe(e,t,n),t\u003dqe(e+1,t,n);return(We(e)-s+t)/7}s(\"w\",[\"ww\",2],\"wo\",\"week\"),s(\"W\",[\"WW\",2],\"Wo\",\"isoWeek\"),h(\"w\",n,u),h(\"ww\",n,t),h(\"W\",n,u),h(\"WW\",n,t),Oe([\"w\",\"ww\",\"W\",\"WW\"],function(e,t,n,s){t[s.substr(0,1)]\u003dM(e)});function Je(e,t){return e.slice(t,7).concat(e.slice(0,t))}s(\"d\",0,\"do\",\"day\"),s(\"dd\",0,0,function(e){return this.localeData().weekdaysMin(this,e)}),s(\"ddd\",0,0,function(e){return this.localeData().weekdaysShort(this,e)}),s(\"dddd\",0,0,function(e){return this.localeData().weekdays(this,e)}),s(\"e\",0,0,\"weekday\"),s(\"E\",0,0,\"isoWeekday\"),h(\"d\",n),h(\"e\",n),h(\"E\",n),h(\"dd\",function(e,t){return t.weekdaysMinRegex(e)}),h(\"ddd\",function(e,t){return t.weekdaysShortRegex(e)}),h(\"dddd\",function(e,t){return t.weekdaysRegex(e)}),Oe([\"dd\",\"ddd\",\"dddd\"],function(e,t,n,s){s\u003dn._locale.weekdaysParse(e,s,n._strict);null!\u003ds?t.d\u003ds:p(n).invalidWeekday\u003de}),Oe([\"d\",\"e\",\"E\"],function(e,t,n,s){t[s]\u003dM(e)});var Qe\u003d\"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday\".split(\"_\"),Xe\u003d\"Sun_Mon_Tue_Wed_Thu_Fri_Sat\".split(\"_\"),Ke\u003d\"Su_Mo_Tu_We_Th_Fr_Sa\".split(\"_\"),et\u003di,tt\u003di,nt\u003di;function st(){function e(e,t){return t.length-e.length}for(var t,n,s,i\u003d[],r\u003d[],a\u003d[],o\u003d[],u\u003d0;u\u003c7;u++)s\u003dl([2e3,1]).day(u),t\u003df(this.weekdaysMin(s,\"\")),n\u003df(this.weekdaysShort(s,\"\")),s\u003df(this.weekdays(s,\"\")),i.push(t),r.push(n),a.push(s),o.push(t),o.push(n),o.push(s);i.sort(e),r.sort(e),a.sort(e),o.sort(e),this._weekdaysRegex\u003dnew RegExp(\"^(\"+o.join(\"|\")+\")\",\"i\"),this._weekdaysShortRegex\u003dthis._weekdaysRegex,this._weekdaysMinRegex\u003dthis._weekdaysRegex,this._weekdaysStrictRegex\u003dnew RegExp(\"^(\"+a.join(\"|\")+\")\",\"i\"),this._weekdaysShortStrictRegex\u003dnew RegExp(\"^(\"+r.join(\"|\")+\")\",\"i\"),this._weekdaysMinStrictRegex\u003dnew RegExp(\"^(\"+i.join(\"|\")+\")\",\"i\")}function it(){return this.hours()%12||12}function rt(e,t){s(e,0,0,function(){return this.localeData().meridiem(this.hours(),this.minutes(),t)})}function at(e,t){return t._meridiemParse}s(\"H\",[\"HH\",2],0,\"hour\"),s(\"h\",[\"hh\",2],0,it),s(\"k\",[\"kk\",2],0,function(){return this.hours()||24}),s(\"hmm\",0,0,function(){return\"\"+it.apply(this)+r(this.minutes(),2)}),s(\"hmmss\",0,0,function(){return\"\"+it.apply(this)+r(this.minutes(),2)+r(this.seconds(),2)}),s(\"Hmm\",0,0,function(){return\"\"+this.hours()+r(this.minutes(),2)}),s(\"Hmmss\",0,0,function(){return\"\"+this.hours()+r(this.minutes(),2)+r(this.seconds(),2)}),rt(\"a\",!0),rt(\"A\",!1),h(\"a\",at),h(\"A\",at),h(\"H\",n,d),h(\"h\",n,u),h(\"k\",n,u),h(\"HH\",n,t),h(\"hh\",n,t),h(\"kk\",n,t),h(\"hmm\",me),h(\"hmmss\",_e),h(\"Hmm\",me),h(\"Hmmss\",_e),v([\"H\",\"HH\"],O),v([\"k\",\"kk\"],function(e,t,n){e\u003dM(e);t[O]\u003d24\u003d\u003d\u003de?0:e}),v([\"a\",\"A\"],function(e,t,n){n._isPm\u003dn._locale.isPM(e),n._meridiem\u003de}),v([\"h\",\"hh\"],function(e,t,n){t[O]\u003dM(e),p(n).bigHour\u003d!0}),v(\"hmm\",function(e,t,n){var s\u003de.length-2;t[O]\u003dM(e.substr(0,s)),t[b]\u003dM(e.substr(s)),p(n).bigHour\u003d!0}),v(\"hmmss\",function(e,t,n){var s\u003de.length-4,i\u003de.length-2;t[O]\u003dM(e.substr(0,s)),t[b]\u003dM(e.substr(s,2)),t[T]\u003dM(e.substr(i)),p(n).bigHour\u003d!0}),v(\"Hmm\",function(e,t,n){var s\u003de.length-2;t[O]\u003dM(e.substr(0,s)),t[b]\u003dM(e.substr(s))}),v(\"Hmmss\",function(e,t,n){var s\u003de.length-4,i\u003de.length-2;t[O]\u003dM(e.substr(0,s)),t[b]\u003dM(e.substr(s,2)),t[T]\u003dM(e.substr(i))});i\u003dRe(\"Hours\",!0);var ot,ut\u003d{calendar:{sameDay:\"[Today at] LT\",nextDay:\"[Tomorrow at] LT\",nextWeek:\"dddd [at] LT\",lastDay:\"[Yesterday at] LT\",lastWeek:\"[Last] dddd [at] LT\",sameElse:\"L\"},longDateFormat:{LTS:\"h:mm:ss A\",LT:\"h:mm A\",L:\"MM/DD/YYYY\",LL:\"MMMM D, YYYY\",LLL:\"MMMM D, YYYY h:mm A\",LLLL:\"dddd, MMMM D, YYYY h:mm A\"},invalidDate:\"Invalid date\",ordinal:\"%d\",dayOfMonthOrdinalParse:/\\d{1,2}/,relativeTime:{future:\"in %s\",past:\"%s ago\",s:\"a few seconds\",ss:\"%d seconds\",m:\"a minute\",mm:\"%d minutes\",h:\"an hour\",hh:\"%d hours\",d:\"a day\",dd:\"%d days\",w:\"a week\",ww:\"%d weeks\",M:\"a month\",MM:\"%d months\",y:\"a year\",yy:\"%d years\"},months:Fe,monthsShort:Le,week:{dow:0,doy:6},weekdays:Qe,weekdaysMin:Ke,weekdaysShort:Xe,meridiemParse:/[ap]\\.?m?\\.?/i},W\u003d{},lt\u003d{};function dt(e){return e\u0026\u0026e.toLowerCase().replace(\"_\",\"-\")}function ht(e){for(var t,n,s,i,r\u003d0;r\u003ce.length;){for(t\u003d(i\u003ddt(e[r]).split(\"-\")).length,n\u003d(n\u003ddt(e[r+1]))?n.split(\"-\"):null;0\u003ct;){if(s\u003dct(i.slice(0,t).join(\"-\")))return s;if(n\u0026\u0026n.length\u003e\u003dt\u0026\u0026function(e,t){for(var n\u003dMath.min(e.length,t.length),s\u003d0;s\u003cn;s+\u003d1)if(e[s]!\u003d\u003dt[s])return s;return n}(i,n)\u003e\u003dt-1)break;t--}r++}return ot}function ct(t){var e,n;if(void 0\u003d\u003d\u003dW[t]\u0026\u0026\"undefined\"!\u003dtypeof module\u0026\u0026module\u0026\u0026module.exports\u0026\u0026(n\u003dt)\u0026\u0026n.match(\"^[^/\\\\\\\\]*$\"))try{e\u003dot._abbr,require(\"./locale/\"+t),ft(e)}catch(e){W[t]\u003dnull}return W[t]}function ft(e,t){return e\u0026\u0026((t\u003dg(t)?P(e):mt(e,t))?ot\u003dt:\"undefined\"!\u003dtypeof console\u0026\u0026console.warn\u0026\u0026console.warn(\"Locale \"+e+\" not found. Did you forget to load it?\")),ot._abbr}function mt(e,t){if(null\u003d\u003d\u003dt)return delete W[e],null;var n,s\u003dut;if(t.abbr\u003de,null!\u003dW[e])Q(\"defineLocaleOverride\",\"use moment.updateLocale(localeName, config) to change an existing locale. moment.defineLocale(localeName, config) should only be used for creating a new locale See http://momentjs.com/guides/#/warnings/define-locale/ for more info.\"),s\u003dW[e]._config;else if(null!\u003dt.parentLocale)if(null!\u003dW[t.parentLocale])s\u003dW[t.parentLocale]._config;else{if(null\u003d\u003d(n\u003dct(t.parentLocale)))return lt[t.parentLocale]||(lt[t.parentLocale]\u003d[]),lt[t.parentLocale].push({name:e,config:t}),null;s\u003dn._config}return W[e]\u003dnew K(X(s,t)),lt[e]\u0026\u0026lt[e].forEach(function(e){mt(e.name,e.config)}),ft(e),W[e]}function P(e){var t;if(!(e\u003de\u0026\u0026e._locale\u0026\u0026e._locale._abbr?e._locale._abbr:e))return ot;if(!y(e)){if(t\u003dct(e))return t;e\u003d[e]}return ht(e)}function _t(e){var t\u003de._a;return t\u0026\u0026-2\u003d\u003d\u003dp(e).overflow\u0026\u0026(t\u003dt[Y]\u003c0||11\u003ct[Y]?Y:t[S]\u003c1||t[S]\u003eHe(t[D],t[Y])?S:t[O]\u003c0||24\u003ct[O]||24\u003d\u003d\u003dt[O]\u0026\u0026(0!\u003d\u003dt[b]||0!\u003d\u003dt[T]||0!\u003d\u003dt[Te])?O:t[b]\u003c0||59\u003ct[b]?b:t[T]\u003c0||59\u003ct[T]?T:t[Te]\u003c0||999\u003ct[Te]?Te:-1,p(e)._overflowDayOfYear\u0026\u0026(t\u003cD||S\u003ct)\u0026\u0026(t\u003dS),p(e)._overflowWeeks\u0026\u0026-1\u003d\u003d\u003dt\u0026\u0026(t\u003dxe),p(e)._overflowWeekday\u0026\u0026-1\u003d\u003d\u003dt\u0026\u0026(t\u003dNe),p(e).overflow\u003dt),e}var yt\u003d/^\\s*((?:[+-]\\d{6}|\\d{4})-(?:\\d\\d-\\d\\d|W\\d\\d-\\d|W\\d\\d|\\d\\d\\d|\\d\\d))(?:(T| )(\\d\\d(?::\\d\\d(?::\\d\\d(?:[.,]\\d+)?)?)?)([+-]\\d\\d(?::?\\d\\d)?|\\s*Z)?)?$/,gt\u003d/^\\s*((?:[+-]\\d{6}|\\d{4})(?:\\d\\d\\d\\d|W\\d\\d\\d|W\\d\\d|\\d\\d\\d|\\d\\d|))(?:(T| )(\\d\\d(?:\\d\\d(?:\\d\\d(?:[.,]\\d+)?)?)?)([+-]\\d\\d(?::?\\d\\d)?|\\s*Z)?)?$/,wt\u003d/Z|[+-]\\d\\d(?::?\\d\\d)?/,pt\u003d[[\"YYYYYY-MM-DD\",/[+-]\\d{6}-\\d\\d-\\d\\d/],[\"YYYY-MM-DD\",/\\d{4}-\\d\\d-\\d\\d/],[\"GGGG-[W]WW-E\",/\\d{4}-W\\d\\d-\\d/],[\"GGGG-[W]WW\",/\\d{4}-W\\d\\d/,!1],[\"YYYY-DDD\",/\\d{4}-\\d{3}/],[\"YYYY-MM\",/\\d{4}-\\d\\d/,!1],[\"YYYYYYMMDD\",/[+-]\\d{10}/],[\"YYYYMMDD\",/\\d{8}/],[\"GGGG[W]WWE\",/\\d{4}W\\d{3}/],[\"GGGG[W]WW\",/\\d{4}W\\d{2}/,!1],[\"YYYYDDD\",/\\d{7}/],[\"YYYYMM\",/\\d{6}/,!1],[\"YYYY\",/\\d{4}/,!1]],kt\u003d[[\"HH:mm:ss.SSSS\",/\\d\\d:\\d\\d:\\d\\d\\.\\d+/],[\"HH:mm:ss,SSSS\",/\\d\\d:\\d\\d:\\d\\d,\\d+/],[\"HH:mm:ss\",/\\d\\d:\\d\\d:\\d\\d/],[\"HH:mm\",/\\d\\d:\\d\\d/],[\"HHmmss.SSSS\",/\\d\\d\\d\\d\\d\\d\\.\\d+/],[\"HHmmss,SSSS\",/\\d\\d\\d\\d\\d\\d,\\d+/],[\"HHmmss\",/\\d\\d\\d\\d\\d\\d/],[\"HHmm\",/\\d\\d\\d\\d/],[\"HH\",/\\d\\d/]],Mt\u003d/^\\/?Date\\((-?\\d+)/i,vt\u003d/^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\\s)?(\\d{1,2})\\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s(\\d{2,4})\\s(\\d\\d):(\\d\\d)(?::(\\d\\d))?\\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\\d{4}))$/,Dt\u003d{UT:0,GMT:0,EDT:-240,EST:-300,CDT:-300,CST:-360,MDT:-360,MST:-420,PDT:-420,PST:-480};function Yt(e){var t,n,s,i,r,a,o\u003de._i,u\u003dyt.exec(o)||gt.exec(o),o\u003dpt.length,l\u003dkt.length;if(u){for(p(e).iso\u003d!0,t\u003d0,n\u003do;t\u003cn;t++)if(pt[t][1].exec(u[1])){i\u003dpt[t][0],s\u003d!1!\u003d\u003dpt[t][2];break}if(null\u003d\u003di)e._isValid\u003d!1;else{if(u[3]){for(t\u003d0,n\u003dl;t\u003cn;t++)if(kt[t][1].exec(u[3])){r\u003d(u[2]||\" \")+kt[t][0];break}if(null\u003d\u003dr)return void(e._isValid\u003d!1)}if(s||null\u003d\u003dr){if(u[4]){if(!wt.exec(u[4]))return void(e._isValid\u003d!1);a\u003d\"Z\"}e._f\u003di+(r||\"\")+(a||\"\"),xt(e)}else e._isValid\u003d!1}}else e._isValid\u003d!1}function St(e,t,n,s,i,r){e\u003d[function(e){e\u003dparseInt(e,10);{if(e\u003c\u003d49)return 2e3+e;if(e\u003c\u003d999)return 1900+e}return e}(e),Le.indexOf(t),parseInt(n,10),parseInt(s,10),parseInt(i,10)];return r\u0026\u0026e.push(parseInt(r,10)),e}function Ot(e){var t,n,s\u003dvt.exec(e._i.replace(/\\([^()]*\\)|[\\n\\t]/g,\" \").replace(/(\\s\\s+)/g,\" \").replace(/^\\s\\s*/,\"\").replace(/\\s\\s*$/,\"\"));s?(t\u003dSt(s[4],s[3],s[2],s[5],s[6],s[7]),function(e,t,n){if(!e||Xe.indexOf(e)\u003d\u003d\u003dnew Date(t[0],t[1],t[2]).getDay())return 1;p(n).weekdayMismatch\u003d!0,n._isValid\u003d!1}(s[1],t,e)\u0026\u0026(e._a\u003dt,e._tzm\u003d(t\u003ds[8],n\u003ds[9],s\u003ds[10],t?Dt[t]:n?0:60*(((t\u003dparseInt(s,10))-(n\u003dt%100))/100)+n),e._d\u003dze.apply(null,e._a),e._d.setUTCMinutes(e._d.getUTCMinutes()-e._tzm),p(e).rfc2822\u003d!0)):e._isValid\u003d!1}function bt(e,t,n){return null!\u003de?e:null!\u003dt?t:n}function Tt(e){var t,n,s,i,r,a,o,u,l,d,h,c\u003d[];if(!e._d){for(s\u003de,i\u003dnew Date(_.now()),n\u003ds._useUTC?[i.getUTCFullYear(),i.getUTCMonth(),i.getUTCDate()]:[i.getFullYear(),i.getMonth(),i.getDate()],e._w\u0026\u0026null\u003d\u003de._a[S]\u0026\u0026null\u003d\u003de._a[Y]\u0026\u0026(null!\u003d(i\u003d(s\u003de)._w).GG||null!\u003di.W||null!\u003di.E?(u\u003d1,l\u003d4,r\u003dbt(i.GG,s._a[D],Be(R(),1,4).year),a\u003dbt(i.W,1),((o\u003dbt(i.E,1))\u003c1||7\u003co)\u0026\u0026(d\u003d!0)):(u\u003ds._locale._week.dow,l\u003ds._locale._week.doy,h\u003dBe(R(),u,l),r\u003dbt(i.gg,s._a[D],h.year),a\u003dbt(i.w,h.week),null!\u003di.d?((o\u003di.d)\u003c0||6\u003co)\u0026\u0026(d\u003d!0):null!\u003di.e?(o\u003di.e+u,(i.e\u003c0||6\u003ci.e)\u0026\u0026(d\u003d!0)):o\u003du),a\u003c1||a\u003eN(r,u,l)?p(s)._overflowWeeks\u003d!0:null!\u003dd?p(s)._overflowWeekday\u003d!0:(h\u003d$e(r,a,o,u,l),s._a[D]\u003dh.year,s._dayOfYear\u003dh.dayOfYear)),null!\u003de._dayOfYear\u0026\u0026(i\u003dbt(e._a[D],n[D]),(e._dayOfYear\u003eWe(i)||0\u003d\u003d\u003de._dayOfYear)\u0026\u0026(p(e)._overflowDayOfYear\u003d!0),d\u003dze(i,0,e._dayOfYear),e._a[Y]\u003dd.getUTCMonth(),e._a[S]\u003dd.getUTCDate()),t\u003d0;t\u003c3\u0026\u0026null\u003d\u003de._a[t];++t)e._a[t]\u003dc[t]\u003dn[t];for(;t\u003c7;t++)e._a[t]\u003dc[t]\u003dnull\u003d\u003de._a[t]?2\u003d\u003d\u003dt?1:0:e._a[t];24\u003d\u003d\u003de._a[O]\u0026\u00260\u003d\u003d\u003de._a[b]\u0026\u00260\u003d\u003d\u003de._a[T]\u0026\u00260\u003d\u003d\u003de._a[Te]\u0026\u0026(e._nextDay\u003d!0,e._a[O]\u003d0),e._d\u003d(e._useUTC?ze:Ze).apply(null,c),r\u003de._useUTC?e._d.getUTCDay():e._d.getDay(),null!\u003de._tzm\u0026\u0026e._d.setUTCMinutes(e._d.getUTCMinutes()-e._tzm),e._nextDay\u0026\u0026(e._a[O]\u003d24),e._w\u0026\u0026void 0!\u003d\u003de._w.d\u0026\u0026e._w.d!\u003d\u003dr\u0026\u0026(p(e).weekdayMismatch\u003d!0)}}function xt(e){if(e._f\u003d\u003d\u003d_.ISO_8601)Yt(e);else if(e._f\u003d\u003d\u003d_.RFC_2822)Ot(e);else{e._a\u003d[],p(e).empty\u003d!0;for(var t,n,s,i,r,a\u003d\"\"+e._i,o\u003da.length,u\u003d0,l\u003dae(e._f,e._locale).match(te)||[],d\u003dl.length,h\u003d0;h\u003cd;h++)n\u003dl[h],(t\u003d(a.match(De(n,e))||[])[0])\u0026\u0026(0\u003c(s\u003da.substr(0,a.indexOf(t))).length\u0026\u0026p(e).unusedInput.push(s),a\u003da.slice(a.indexOf(t)+t.length),u+\u003dt.length),ie[n]?(t?p(e).empty\u003d!1:p(e).unusedTokens.push(n),s\u003dn,r\u003de,null!\u003d(i\u003dt)\u0026\u0026c(Se,s)\u0026\u0026Se[s](i,r._a,r,s)):e._strict\u0026\u0026!t\u0026\u0026p(e).unusedTokens.push(n);p(e).charsLeftOver\u003do-u,0\u003ca.length\u0026\u0026p(e).unusedInput.push(a),e._a[O]\u003c\u003d12\u0026\u0026!0\u003d\u003d\u003dp(e).bigHour\u0026\u00260\u003ce._a[O]\u0026\u0026(p(e).bigHour\u003dvoid 0),p(e).parsedDateParts\u003de._a.slice(0),p(e).meridiem\u003de._meridiem,e._a[O]\u003dfunction(e,t,n){if(null\u003d\u003dn)return t;return null!\u003de.meridiemHour?e.meridiemHour(t,n):null!\u003de.isPM?((e\u003de.isPM(n))\u0026\u0026t\u003c12\u0026\u0026(t+\u003d12),t\u003de||12!\u003d\u003dt?t:0):t}(e._locale,e._a[O],e._meridiem),null!\u003d\u003d(o\u003dp(e).era)\u0026\u0026(e._a[D]\u003de._locale.erasConvertYear(o,e._a[D])),Tt(e),_t(e)}}function Nt(e){var t,n,s,i\u003de._i,r\u003de._f;if(e._locale\u003de._locale||P(e._l),null\u003d\u003d\u003di||void 0\u003d\u003d\u003dr\u0026\u0026\"\"\u003d\u003d\u003di)return I({nullInput:!0});if(\"string\"\u003d\u003dtypeof i\u0026\u0026(e._i\u003di\u003de._locale.preparse(i)),k(i))return new $(_t(i));if(V(i))e._d\u003di;else if(y(r)){var a,o,u,l,d,h,c\u003de,f\u003d!1,m\u003dc._f.length;if(0\u003d\u003d\u003dm)p(c).invalidFormat\u003d!0,c._d\u003dnew Date(NaN);else{for(l\u003d0;l\u003cm;l++)d\u003d0,h\u003d!1,a\u003dq({},c),null!\u003dc._useUTC\u0026\u0026(a._useUTC\u003dc._useUTC),a._f\u003dc._f[l],xt(a),A(a)\u0026\u0026(h\u003d!0),d\u003d(d+\u003dp(a).charsLeftOver)+10*p(a).unusedTokens.length,p(a).score\u003dd,f?d\u003cu\u0026\u0026(u\u003dd,o\u003da):(null\u003d\u003du||d\u003cu||h)\u0026\u0026(u\u003dd,o\u003da,h)\u0026\u0026(f\u003d!0);E(c,o||a)}}else if(r)xt(e);else if(g(r\u003d(i\u003de)._i))i._d\u003dnew Date(_.now());else V(r)?i._d\u003dnew Date(r.valueOf()):\"string\"\u003d\u003dtypeof r?(n\u003di,null!\u003d\u003d(t\u003dMt.exec(n._i))?n._d\u003dnew Date(+t[1]):(Yt(n),!1\u003d\u003d\u003dn._isValid\u0026\u0026(delete n._isValid,Ot(n),!1\u003d\u003d\u003dn._isValid)\u0026\u0026(delete n._isValid,n._strict?n._isValid\u003d!1:_.createFromInputFallback(n)))):y(r)?(i._a\u003dG(r.slice(0),function(e){return parseInt(e,10)}),Tt(i)):F(r)?(t\u003di)._d||(s\u003dvoid 0\u003d\u003d\u003d(n\u003due(t._i)).day?n.date:n.day,t._a\u003dG([n.year,n.month,s,n.hour,n.minute,n.second,n.millisecond],function(e){return e\u0026\u0026parseInt(e,10)}),Tt(t)):w(r)?i._d\u003dnew Date(r):_.createFromInputFallback(i);return A(e)||(e._d\u003dnull),e}function Wt(e,t,n,s,i){var r\u003d{};return!0!\u003d\u003dt\u0026\u0026!1!\u003d\u003dt||(s\u003dt,t\u003dvoid 0),!0!\u003d\u003dn\u0026\u0026!1!\u003d\u003dn||(s\u003dn,n\u003dvoid 0),(F(e)\u0026\u0026L(e)||y(e)\u0026\u00260\u003d\u003d\u003de.length)\u0026\u0026(e\u003dvoid 0),r._isAMomentObject\u003d!0,r._useUTC\u003dr._isUTC\u003di,r._l\u003dn,r._i\u003de,r._f\u003dt,r._strict\u003ds,(i\u003dnew $(_t(Nt(i\u003dr))))._nextDay\u0026\u0026(i.add(1,\"d\"),i._nextDay\u003dvoid 0),i}function R(e,t,n,s){return Wt(e,t,n,s,!1)}_.createFromInputFallback\u003de(\"value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.\",function(e){e._d\u003dnew Date(e._i+(e._useUTC?\" UTC\":\"\"))}),_.ISO_8601\u003dfunction(){},_.RFC_2822\u003dfunction(){};me\u003de(\"moment().min is deprecated, use moment.max instead. http://momentjs.com/guides/#/warnings/min-max/\",function(){var e\u003dR.apply(null,arguments);return this.isValid()\u0026\u0026e.isValid()?e\u003cthis?this:e:I()}),_e\u003de(\"moment().max is deprecated, use moment.min instead. http://momentjs.com/guides/#/warnings/min-max/\",function(){var e\u003dR.apply(null,arguments);return this.isValid()\u0026\u0026e.isValid()?this\u003ce?this:e:I()});function Pt(e,t){var n,s;if(!(t\u003d1\u003d\u003d\u003dt.length\u0026\u0026y(t[0])?t[0]:t).length)return R();for(n\u003dt[0],s\u003d1;s\u003ct.length;++s)t[s].isValid()\u0026\u0026!t[s][e](n)||(n\u003dt[s]);return n}var Rt\u003d[\"year\",\"quarter\",\"month\",\"week\",\"day\",\"hour\",\"minute\",\"second\",\"millisecond\"];function Ct(e){var e\u003due(e),t\u003de.year||0,n\u003de.quarter||0,s\u003de.month||0,i\u003de.week||e.isoWeek||0,r\u003de.day||0,a\u003de.hour||0,o\u003de.minute||0,u\u003de.second||0,l\u003de.millisecond||0;this._isValid\u003dfunction(e){var t,n,s\u003d!1,i\u003dRt.length;for(t in e)if(c(e,t)\u0026\u0026(-1\u003d\u003d\u003dx.call(Rt,t)||null!\u003de[t]\u0026\u0026isNaN(e[t])))return!1;for(n\u003d0;n\u003ci;++n)if(e[Rt[n]]){if(s)return!1;parseFloat(e[Rt[n]])!\u003d\u003dM(e[Rt[n]])\u0026\u0026(s\u003d!0)}return!0}(e),this._milliseconds\u003d+l+1e3*u+6e4*o+1e3*a*60*60,this._days\u003d+r+7*i,this._months\u003d+s+3*n+12*t,this._data\u003d{},this._locale\u003dP(),this._bubble()}function Ut(e){return e instanceof Ct}function Ht(e){return e\u003c0?-1*Math.round(-1*e):Math.round(e)}function Ft(e,n){s(e,0,0,function(){var e\u003dthis.utcOffset(),t\u003d\"+\";return e\u003c0\u0026\u0026(e\u003d-e,t\u003d\"-\"),t+r(~~(e/60),2)+n+r(~~e%60,2)})}Ft(\"Z\",\":\"),Ft(\"ZZ\",\"\"),h(\"Z\",ve),h(\"ZZ\",ve),v([\"Z\",\"ZZ\"],function(e,t,n){n._useUTC\u003d!0,n._tzm\u003dVt(ve,e)});var Lt\u003d/([\\+\\-]|\\d\\d)/gi;function Vt(e,t){var t\u003d(t||\"\").match(e);return null\u003d\u003d\u003dt?null:0\u003d\u003d\u003d(t\u003d60*(e\u003d((t[t.length-1]||[])+\"\").match(Lt)||[\"-\",0,0])[1]+M(e[2]))?0:\"+\"\u003d\u003d\u003de[0]?t:-t}function Gt(e,t){var n;return t._isUTC?(t\u003dt.clone(),n\u003d(k(e)||V(e)?e:R(e)).valueOf()-t.valueOf(),t._d.setTime(t._d.valueOf()+n),_.updateOffset(t,!1),t):R(e).local()}function Et(e){return-Math.round(e._d.getTimezoneOffset())}function At(){return!!this.isValid()\u0026\u0026this._isUTC\u0026\u00260\u003d\u003d\u003dthis._offset}_.updateOffset\u003dfunction(){};var It\u003d/^(-|\\+)?(?:(\\d*)[. ])?(\\d+):(\\d+)(?::(\\d+)(\\.\\d*)?)?$/,jt\u003d/^(-|\\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;function C(e,t){var n,s\u003de;return Ut(e)?s\u003d{ms:e._milliseconds,d:e._days,M:e._months}:w(e)||!isNaN(+e)?(s\u003d{},t?s[t]\u003d+e:s.milliseconds\u003d+e):(t\u003dIt.exec(e))?(n\u003d\"-\"\u003d\u003d\u003dt[1]?-1:1,s\u003d{y:0,d:M(t[S])*n,h:M(t[O])*n,m:M(t[b])*n,s:M(t[T])*n,ms:M(Ht(1e3*t[Te]))*n}):(t\u003djt.exec(e))?(n\u003d\"-\"\u003d\u003d\u003dt[1]?-1:1,s\u003d{y:Zt(t[2],n),M:Zt(t[3],n),w:Zt(t[4],n),d:Zt(t[5],n),h:Zt(t[6],n),m:Zt(t[7],n),s:Zt(t[8],n)}):null\u003d\u003ds?s\u003d{}:\"object\"\u003d\u003dtypeof s\u0026\u0026(\"from\"in s||\"to\"in s)\u0026\u0026(t\u003dfunction(e,t){var n;if(!e.isValid()||!t.isValid())return{milliseconds:0,months:0};t\u003dGt(t,e),e.isBefore(t)?n\u003dzt(e,t):((n\u003dzt(t,e)).milliseconds\u003d-n.milliseconds,n.months\u003d-n.months);return n}(R(s.from),R(s.to)),(s\u003d{}).ms\u003dt.milliseconds,s.M\u003dt.months),n\u003dnew Ct(s),Ut(e)\u0026\u0026c(e,\"_locale\")\u0026\u0026(n._locale\u003de._locale),Ut(e)\u0026\u0026c(e,\"_isValid\")\u0026\u0026(n._isValid\u003de._isValid),n}function Zt(e,t){e\u003de\u0026\u0026parseFloat(e.replace(\",\",\".\"));return(isNaN(e)?0:e)*t}function zt(e,t){var n\u003d{};return n.months\u003dt.month()-e.month()+12*(t.year()-e.year()),e.clone().add(n.months,\"M\").isAfter(t)\u0026\u0026--n.months,n.milliseconds\u003d+t-+e.clone().add(n.months,\"M\"),n}function qt(s,i){return function(e,t){var n;return null\u003d\u003d\u003dt||isNaN(+t)||(Q(i,\"moment().\"+i+\"(period, number) is deprecated. Please use moment().\"+i+\"(number, period). See http://momentjs.com/guides/#/warnings/add-inverted-param/ for more info.\"),n\u003de,e\u003dt,t\u003dn),$t(this,C(e,t),s),this}}function $t(e,t,n,s){var i\u003dt._milliseconds,r\u003dHt(t._days),t\u003dHt(t._months);e.isValid()\u0026\u0026(s\u003dnull\u003d\u003ds||s,t\u0026\u0026Ae(e,Ce(e,\"Month\")+t*n),r\u0026\u0026Ue(e,\"Date\",Ce(e,\"Date\")+r*n),i\u0026\u0026e._d.setTime(e._d.valueOf()+i*n),s)\u0026\u0026_.updateOffset(e,r||t)}C.fn\u003dCt.prototype,C.invalid\u003dfunction(){return C(NaN)};Fe\u003dqt(1,\"add\"),Qe\u003dqt(-1,\"subtract\");function Bt(e){return\"string\"\u003d\u003dtypeof e||e instanceof String}function Jt(e){return k(e)||V(e)||Bt(e)||w(e)||function(t){var e\u003dy(t),n\u003d!1;e\u0026\u0026(n\u003d0\u003d\u003d\u003dt.filter(function(e){return!w(e)\u0026\u0026Bt(t)}).length);return e\u0026\u0026n}(e)||function(e){var t,n,s\u003dF(e)\u0026\u0026!L(e),i\u003d!1,r\u003d[\"years\",\"year\",\"y\",\"months\",\"month\",\"M\",\"days\",\"day\",\"d\",\"dates\",\"date\",\"D\",\"hours\",\"hour\",\"h\",\"minutes\",\"minute\",\"m\",\"seconds\",\"second\",\"s\",\"milliseconds\",\"millisecond\",\"ms\"],a\u003dr.length;for(t\u003d0;t\u003ca;t+\u003d1)n\u003dr[t],i\u003di||c(e,n);return s\u0026\u0026i}(e)||null\u003d\u003de}function Qt(e,t){var n,s;return e.date()\u003ct.date()?-Qt(t,e):-((n\u003d12*(t.year()-e.year())+(t.month()-e.month()))+(t-(s\u003de.clone().add(n,\"months\"))\u003c0?(t-s)/(s-e.clone().add(n-1,\"months\")):(t-s)/(e.clone().add(1+n,\"months\")-s)))||0}function Xt(e){return void 0\u003d\u003d\u003de?this._locale._abbr:(null!\u003d(e\u003dP(e))\u0026\u0026(this._locale\u003de),this)}_.defaultFormat\u003d\"YYYY-MM-DDTHH:mm:ssZ\",_.defaultFormatUtc\u003d\"YYYY-MM-DDTHH:mm:ss[Z]\";Ke\u003de(\"moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.\",function(e){return void 0\u003d\u003d\u003de?this.localeData():this.locale(e)});function Kt(){return this._locale}var en\u003d126227808e5;function tn(e,t){return(e%t+t)%t}function nn(e,t,n){return e\u003c100\u0026\u00260\u003c\u003de?new Date(e+400,t,n)-en:new Date(e,t,n).valueOf()}function sn(e,t,n){return e\u003c100\u0026\u00260\u003c\u003de?Date.UTC(e+400,t,n)-en:Date.UTC(e,t,n)}function rn(e,t){return t.erasAbbrRegex(e)}function an(){for(var e,t,n,s\u003d[],i\u003d[],r\u003d[],a\u003d[],o\u003dthis.eras(),u\u003d0,l\u003do.length;u\u003cl;++u)e\u003df(o[u].name),t\u003df(o[u].abbr),n\u003df(o[u].narrow),i.push(e),s.push(t),r.push(n),a.push(e),a.push(t),a.push(n);this._erasRegex\u003dnew RegExp(\"^(\"+a.join(\"|\")+\")\",\"i\"),this._erasNameRegex\u003dnew RegExp(\"^(\"+i.join(\"|\")+\")\",\"i\"),this._erasAbbrRegex\u003dnew RegExp(\"^(\"+s.join(\"|\")+\")\",\"i\"),this._erasNarrowRegex\u003dnew RegExp(\"^(\"+r.join(\"|\")+\")\",\"i\")}function on(e,t){s(0,[e,e.length],0,t)}function un(e,t,n,s,i){var r;return null\u003d\u003de?Be(this,s,i).year:(r\u003dN(e,s,i),function(e,t,n,s,i){e\u003d$e(e,t,n,s,i),t\u003dze(e.year,0,e.dayOfYear);return this.year(t.getUTCFullYear()),this.month(t.getUTCMonth()),this.date(t.getUTCDate()),this}.call(this,e,t\u003dr\u003ct?r:t,n,s,i))}s(\"N\",0,0,\"eraAbbr\"),s(\"NN\",0,0,\"eraAbbr\"),s(\"NNN\",0,0,\"eraAbbr\"),s(\"NNNN\",0,0,\"eraName\"),s(\"NNNNN\",0,0,\"eraNarrow\"),s(\"y\",[\"y\",1],\"yo\",\"eraYear\"),s(\"y\",[\"yy\",2],0,\"eraYear\"),s(\"y\",[\"yyy\",3],0,\"eraYear\"),s(\"y\",[\"yyyy\",4],0,\"eraYear\"),h(\"N\",rn),h(\"NN\",rn),h(\"NNN\",rn),h(\"NNNN\",function(e,t){return t.erasNameRegex(e)}),h(\"NNNNN\",function(e,t){return t.erasNarrowRegex(e)}),v([\"N\",\"NN\",\"NNN\",\"NNNN\",\"NNNNN\"],function(e,t,n,s){s\u003dn._locale.erasParse(e,s,n._strict);s?p(n).era\u003ds:p(n).invalidEra\u003de}),h(\"y\",pe),h(\"yy\",pe),h(\"yyy\",pe),h(\"yyyy\",pe),h(\"yo\",function(e,t){return t._eraYearOrdinalRegex||pe}),v([\"y\",\"yy\",\"yyy\",\"yyyy\"],D),v([\"yo\"],function(e,t,n,s){var i;n._locale._eraYearOrdinalRegex\u0026\u0026(i\u003de.match(n._locale._eraYearOrdinalRegex)),n._locale.eraYearOrdinalParse?t[D]\u003dn._locale.eraYearOrdinalParse(e,i):t[D]\u003dparseInt(e,10)}),s(0,[\"gg\",2],0,function(){return this.weekYear()%100}),s(0,[\"GG\",2],0,function(){return this.isoWeekYear()%100}),on(\"gggg\",\"weekYear\"),on(\"ggggg\",\"weekYear\"),on(\"GGGG\",\"isoWeekYear\"),on(\"GGGGG\",\"isoWeekYear\"),h(\"G\",ke),h(\"g\",ke),h(\"GG\",n,t),h(\"gg\",n,t),h(\"GGGG\",ge,ce),h(\"gggg\",ge,ce),h(\"GGGGG\",we,fe),h(\"ggggg\",we,fe),Oe([\"gggg\",\"ggggg\",\"GGGG\",\"GGGGG\"],function(e,t,n,s){t[s.substr(0,2)]\u003dM(e)}),Oe([\"gg\",\"GG\"],function(e,t,n,s){t[s]\u003d_.parseTwoDigitYear(e)}),s(\"Q\",0,\"Qo\",\"quarter\"),h(\"Q\",de),v(\"Q\",function(e,t){t[Y]\u003d3*(M(e)-1)}),s(\"D\",[\"DD\",2],\"Do\",\"date\"),h(\"D\",n,u),h(\"DD\",n,t),h(\"Do\",function(e,t){return e?t._dayOfMonthOrdinalParse||t._ordinalParse:t._dayOfMonthOrdinalParseLenient}),v([\"D\",\"DD\"],S),v(\"Do\",function(e,t){t[S]\u003dM(e.match(n)[0])});ge\u003dRe(\"Date\",!0);s(\"DDD\",[\"DDDD\",3],\"DDDo\",\"dayOfYear\"),h(\"DDD\",ye),h(\"DDDD\",he),v([\"DDD\",\"DDDD\"],function(e,t,n){n._dayOfYear\u003dM(e)}),s(\"m\",[\"mm\",2],0,\"minute\"),h(\"m\",n,d),h(\"mm\",n,t),v([\"m\",\"mm\"],b);var ln,ce\u003dRe(\"Minutes\",!1),we\u003d(s(\"s\",[\"ss\",2],0,\"second\"),h(\"s\",n,d),h(\"ss\",n,t),v([\"s\",\"ss\"],T),Re(\"Seconds\",!1));for(s(\"S\",0,0,function(){return~~(this.millisecond()/100)}),s(0,[\"SS\",2],0,function(){return~~(this.millisecond()/10)}),s(0,[\"SSS\",3],0,\"millisecond\"),s(0,[\"SSSS\",4],0,function(){return 10*this.millisecond()}),s(0,[\"SSSSS\",5],0,function(){return 100*this.millisecond()}),s(0,[\"SSSSSS\",6],0,function(){return 1e3*this.millisecond()}),s(0,[\"SSSSSSS\",7],0,function(){return 1e4*this.millisecond()}),s(0,[\"SSSSSSSS\",8],0,function(){return 1e5*this.millisecond()}),s(0,[\"SSSSSSSSS\",9],0,function(){return 1e6*this.millisecond()}),h(\"S\",ye,de),h(\"SS\",ye,t),h(\"SSS\",ye,he),ln\u003d\"SSSS\";ln.length\u003c\u003d9;ln+\u003d\"S\")h(ln,pe);function dn(e,t){t[Te]\u003dM(1e3*(\"0.\"+e))}for(ln\u003d\"S\";ln.length\u003c\u003d9;ln+\u003d\"S\")v(ln,dn);fe\u003dRe(\"Milliseconds\",!1),s(\"z\",0,0,\"zoneAbbr\"),s(\"zz\",0,0,\"zoneName\");u\u003d$.prototype;function hn(e){return e}u.add\u003dFe,u.calendar\u003dfunction(e,t){1\u003d\u003d\u003darguments.length\u0026\u0026(arguments[0]?Jt(arguments[0])?(e\u003darguments[0],t\u003dvoid 0):function(e){for(var t\u003dF(e)\u0026\u0026!L(e),n\u003d!1,s\u003d[\"sameDay\",\"nextDay\",\"lastDay\",\"nextWeek\",\"lastWeek\",\"sameElse\"],i\u003d0;i\u003cs.length;i+\u003d1)n\u003dn||c(e,s[i]);return t\u0026\u0026n}(arguments[0])\u0026\u0026(t\u003darguments[0],e\u003dvoid 0):t\u003de\u003dvoid 0);var e\u003de||R(),n\u003dGt(e,this).startOf(\"day\"),n\u003d_.calendarFormat(this,n)||\"sameElse\",t\u003dt\u0026\u0026(a(t[n])?t[n].call(this,e):t[n]);return this.format(t||this.localeData().calendar(n,this,R(e)))},u.clone\u003dfunction(){return new $(this)},u.diff\u003dfunction(e,t,n){var s,i,r;if(!this.isValid())return NaN;if(!(s\u003dGt(e,this)).isValid())return NaN;switch(i\u003d6e4*(s.utcOffset()-this.utcOffset()),t\u003do(t)){case\"year\":r\u003dQt(this,s)/12;break;case\"month\":r\u003dQt(this,s);break;case\"quarter\":r\u003dQt(this,s)/3;break;case\"second\":r\u003d(this-s)/1e3;break;case\"minute\":r\u003d(this-s)/6e4;break;case\"hour\":r\u003d(this-s)/36e5;break;case\"day\":r\u003d(this-s-i)/864e5;break;case\"week\":r\u003d(this-s-i)/6048e5;break;default:r\u003dthis-s}return n?r:m(r)},u.endOf\u003dfunction(e){var t,n;if(void 0!\u003d\u003d(e\u003do(e))\u0026\u0026\"millisecond\"!\u003d\u003de\u0026\u0026this.isValid()){switch(n\u003dthis._isUTC?sn:nn,e){case\"year\":t\u003dn(this.year()+1,0,1)-1;break;case\"quarter\":t\u003dn(this.year(),this.month()-this.month()%3+3,1)-1;break;case\"month\":t\u003dn(this.year(),this.month()+1,1)-1;break;case\"week\":t\u003dn(this.year(),this.month(),this.date()-this.weekday()+7)-1;break;case\"isoWeek\":t\u003dn(this.year(),this.month(),this.date()-(this.isoWeekday()-1)+7)-1;break;case\"day\":case\"date\":t\u003dn(this.year(),this.month(),this.date()+1)-1;break;case\"hour\":t\u003dthis._d.valueOf(),t+\u003d36e5-tn(t+(this._isUTC?0:6e4*this.utcOffset()),36e5)-1;break;case\"minute\":t\u003dthis._d.valueOf(),t+\u003d6e4-tn(t,6e4)-1;break;case\"second\":t\u003dthis._d.valueOf(),t+\u003d1e3-tn(t,1e3)-1;break}this._d.setTime(t),_.updateOffset(this,!0)}return this},u.format\u003dfunction(e){return e\u003de||(this.isUtc()?_.defaultFormatUtc:_.defaultFormat),e\u003dre(this,e),this.localeData().postformat(e)},u.from\u003dfunction(e,t){return this.isValid()\u0026\u0026(k(e)\u0026\u0026e.isValid()||R(e).isValid())?C({to:this,from:e}).locale(this.locale()).humanize(!t):this.localeData().invalidDate()},u.fromNow\u003dfunction(e){return this.from(R(),e)},u.to\u003dfunction(e,t){return this.isValid()\u0026\u0026(k(e)\u0026\u0026e.isValid()||R(e).isValid())?C({from:this,to:e}).locale(this.locale()).humanize(!t):this.localeData().invalidDate()},u.toNow\u003dfunction(e){return this.to(R(),e)},u.get\u003dfunction(e){return a(this[e\u003do(e)])?this[e]():this},u.invalidAt\u003dfunction(){return p(this).overflow},u.isAfter\u003dfunction(e,t){return e\u003dk(e)?e:R(e),!(!this.isValid()||!e.isValid())\u0026\u0026(\"millisecond\"\u003d\u003d\u003d(t\u003do(t)||\"millisecond\")?this.valueOf()\u003ee.valueOf():e.valueOf()\u003cthis.clone().startOf(t).valueOf())},u.isBefore\u003dfunction(e,t){return e\u003dk(e)?e:R(e),!(!this.isValid()||!e.isValid())\u0026\u0026(\"millisecond\"\u003d\u003d\u003d(t\u003do(t)||\"millisecond\")?this.valueOf()\u003ce.valueOf():this.clone().endOf(t).valueOf()\u003ce.valueOf())},u.isBetween\u003dfunction(e,t,n,s){return e\u003dk(e)?e:R(e),t\u003dk(t)?t:R(t),!!(this.isValid()\u0026\u0026e.isValid()\u0026\u0026t.isValid())\u0026\u0026(\"(\"\u003d\u003d\u003d(s\u003ds||\"()\")[0]?this.isAfter(e,n):!this.isBefore(e,n))\u0026\u0026(\")\"\u003d\u003d\u003ds[1]?this.isBefore(t,n):!this.isAfter(t,n))},u.isSame\u003dfunction(e,t){var e\u003dk(e)?e:R(e);return!(!this.isValid()||!e.isValid())\u0026\u0026(\"millisecond\"\u003d\u003d\u003d(t\u003do(t)||\"millisecond\")?this.valueOf()\u003d\u003d\u003de.valueOf():(e\u003de.valueOf(),this.clone().startOf(t).valueOf()\u003c\u003de\u0026\u0026e\u003c\u003dthis.clone().endOf(t).valueOf()))},u.isSameOrAfter\u003dfunction(e,t){return this.isSame(e,t)||this.isAfter(e,t)},u.isSameOrBefore\u003dfunction(e,t){return this.isSame(e,t)||this.isBefore(e,t)},u.isValid\u003dfunction(){return A(this)},u.lang\u003dKe,u.locale\u003dXt,u.localeData\u003dKt,u.max\u003d_e,u.min\u003dme,u.parsingFlags\u003dfunction(){return E({},p(this))},u.set\u003dfunction(e,t){if(\"object\"\u003d\u003dtypeof e)for(var n\u003dfunction(e){var t,n\u003d[];for(t in e)c(e,t)\u0026\u0026n.push({unit:t,priority:le[t]});return n.sort(function(e,t){return e.priority-t.priority}),n}(e\u003due(e)),s\u003dn.length,i\u003d0;i\u003cs;i++)this[n[i].unit](e[n[i].unit]);else if(a(this[e\u003do(e)]))return this[e](t);return this},u.startOf\u003dfunction(e){var t,n;if(void 0!\u003d\u003d(e\u003do(e))\u0026\u0026\"millisecond\"!\u003d\u003de\u0026\u0026this.isValid()){switch(n\u003dthis._isUTC?sn:nn,e){case\"year\":t\u003dn(this.year(),0,1);break;case\"quarter\":t\u003dn(this.year(),this.month()-this.month()%3,1);break;case\"month\":t\u003dn(this.year(),this.month(),1);break;case\"week\":t\u003dn(this.year(),this.month(),this.date()-this.weekday());break;case\"isoWeek\":t\u003dn(this.year(),this.month(),this.date()-(this.isoWeekday()-1));break;case\"day\":case\"date\":t\u003dn(this.year(),this.month(),this.date());break;case\"hour\":t\u003dthis._d.valueOf(),t-\u003dtn(t+(this._isUTC?0:6e4*this.utcOffset()),36e5);break;case\"minute\":t\u003dthis._d.valueOf(),t-\u003dtn(t,6e4);break;case\"second\":t\u003dthis._d.valueOf(),t-\u003dtn(t,1e3);break}this._d.setTime(t),_.updateOffset(this,!0)}return this},u.subtract\u003dQe,u.toArray\u003dfunction(){var e\u003dthis;return[e.year(),e.month(),e.date(),e.hour(),e.minute(),e.second(),e.millisecond()]},u.toObject\u003dfunction(){var e\u003dthis;return{years:e.year(),months:e.month(),date:e.date(),hours:e.hours(),minutes:e.minutes(),seconds:e.seconds(),milliseconds:e.milliseconds()}},u.toDate\u003dfunction(){return new Date(this.valueOf())},u.toISOString\u003dfunction(e){var t;return this.isValid()?(t\u003d(e\u003d!0!\u003d\u003de)?this.clone().utc():this).year()\u003c0||9999\u003ct.year()?re(t,e?\"YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]\":\"YYYYYY-MM-DD[T]HH:mm:ss.SSSZ\"):a(Date.prototype.toISOString)?e?this.toDate().toISOString():new Date(this.valueOf()+60*this.utcOffset()*1e3).toISOString().replace(\"Z\",re(t,\"Z\")):re(t,e?\"YYYY-MM-DD[T]HH:mm:ss.SSS[Z]\":\"YYYY-MM-DD[T]HH:mm:ss.SSSZ\"):null},u.inspect\u003dfunction(){var e,t,n;return this.isValid()?(t\u003d\"moment\",e\u003d\"\",this.isLocal()||(t\u003d0\u003d\u003d\u003dthis.utcOffset()?\"moment.utc\":\"moment.parseZone\",e\u003d\"Z\"),t\u003d\"[\"+t+\u0027(\"]\u0027,n\u003d0\u003c\u003dthis.year()\u0026\u0026this.year()\u003c\u003d9999?\"YYYY\":\"YYYYYY\",this.format(t+n+\"-MM-DD[T]HH:mm:ss.SSS\"+(e+\u0027[\")]\u0027))):\"moment.invalid(/* \"+this._i+\" */)\"},\"undefined\"!\u003dtypeof Symbol\u0026\u0026null!\u003dSymbol.for\u0026\u0026(u[Symbol.for(\"nodejs.util.inspect.custom\")]\u003dfunction(){return\"Moment\u003c\"+this.format()+\"\u003e\"}),u.toJSON\u003dfunction(){return this.isValid()?this.toISOString():null},u.toString\u003dfunction(){return this.clone().locale(\"en\").format(\"ddd MMM DD YYYY HH:mm:ss [GMT]ZZ\")},u.unix\u003dfunction(){return Math.floor(this.valueOf()/1e3)},u.valueOf\u003dfunction(){return this._d.valueOf()-6e4*(this._offset||0)},u.creationData\u003dfunction(){return{input:this._i,format:this._f,locale:this._locale,isUTC:this._isUTC,strict:this._strict}},u.eraName\u003dfunction(){for(var e,t\u003dthis.localeData().eras(),n\u003d0,s\u003dt.length;n\u003cs;++n){if(e\u003dthis.clone().startOf(\"day\").valueOf(),t[n].since\u003c\u003de\u0026\u0026e\u003c\u003dt[n].until)return t[n].name;if(t[n].until\u003c\u003de\u0026\u0026e\u003c\u003dt[n].since)return t[n].name}return\"\"},u.eraNarrow\u003dfunction(){for(var e,t\u003dthis.localeData().eras(),n\u003d0,s\u003dt.length;n\u003cs;++n){if(e\u003dthis.clone().startOf(\"day\").valueOf(),t[n].since\u003c\u003de\u0026\u0026e\u003c\u003dt[n].until)return t[n].narrow;if(t[n].until\u003c\u003de\u0026\u0026e\u003c\u003dt[n].since)return t[n].narrow}return\"\"},u.eraAbbr\u003dfunction(){for(var e,t\u003dthis.localeData().eras(),n\u003d0,s\u003dt.length;n\u003cs;++n){if(e\u003dthis.clone().startOf(\"day\").valueOf(),t[n].since\u003c\u003de\u0026\u0026e\u003c\u003dt[n].until)return t[n].abbr;if(t[n].until\u003c\u003de\u0026\u0026e\u003c\u003dt[n].since)return t[n].abbr}return\"\"},u.eraYear\u003dfunction(){for(var e,t,n\u003dthis.localeData().eras(),s\u003d0,i\u003dn.length;s\u003ci;++s)if(e\u003dn[s].since\u003c\u003dn[s].until?1:-1,t\u003dthis.clone().startOf(\"day\").valueOf(),n[s].since\u003c\u003dt\u0026\u0026t\u003c\u003dn[s].until||n[s].until\u003c\u003dt\u0026\u0026t\u003c\u003dn[s].since)return(this.year()-_(n[s].since).year())*e+n[s].offset;return this.year()},u.year\u003dPe,u.isLeapYear\u003dfunction(){return be(this.year())},u.weekYear\u003dfunction(e){return un.call(this,e,this.week(),this.weekday()+this.localeData()._week.dow,this.localeData()._week.dow,this.localeData()._week.doy)},u.isoWeekYear\u003dfunction(e){return un.call(this,e,this.isoWeek(),this.isoWeekday(),1,4)},u.quarter\u003du.quarters\u003dfunction(e){return null\u003d\u003de?Math.ceil((this.month()+1)/3):this.month(3*(e-1)+this.month()%3)},u.month\u003dIe,u.daysInMonth\u003dfunction(){return He(this.year(),this.month())},u.week\u003du.weeks\u003dfunction(e){var t\u003dthis.localeData().week(this);return null\u003d\u003de?t:this.add(7*(e-t),\"d\")},u.isoWeek\u003du.isoWeeks\u003dfunction(e){var t\u003dBe(this,1,4).week;return null\u003d\u003de?t:this.add(7*(e-t),\"d\")},u.weeksInYear\u003dfunction(){var e\u003dthis.localeData()._week;return N(this.year(),e.dow,e.doy)},u.weeksInWeekYear\u003dfunction(){var e\u003dthis.localeData()._week;return N(this.weekYear(),e.dow,e.doy)},u.isoWeeksInYear\u003dfunction(){return N(this.year(),1,4)},u.isoWeeksInISOWeekYear\u003dfunction(){return N(this.isoWeekYear(),1,4)},u.date\u003dge,u.day\u003du.days\u003dfunction(e){var t,n,s;return this.isValid()?(t\u003dCe(this,\"Day\"),null!\u003de?(n\u003de,s\u003dthis.localeData(),e\u003d\"string\"!\u003dtypeof n?n:isNaN(n)?\"number\"\u003d\u003dtypeof(n\u003ds.weekdaysParse(n))?n:null:parseInt(n,10),this.add(e-t,\"d\")):t):null!\u003de?this:NaN},u.weekday\u003dfunction(e){var t;return this.isValid()?(t\u003d(this.day()+7-this.localeData()._week.dow)%7,null\u003d\u003de?t:this.add(e-t,\"d\")):null!\u003de?this:NaN},u.isoWeekday\u003dfunction(e){var t,n;return this.isValid()?null!\u003de?(t\u003de,n\u003dthis.localeData(),n\u003d\"string\"\u003d\u003dtypeof t?n.weekdaysParse(t)%7||7:isNaN(t)?null:t,this.day(this.day()%7?n:n-7)):this.day()||7:null!\u003de?this:NaN},u.dayOfYear\u003dfunction(e){var t\u003dMath.round((this.clone().startOf(\"day\")-this.clone().startOf(\"year\"))/864e5)+1;return null\u003d\u003de?t:this.add(e-t,\"d\")},u.hour\u003du.hours\u003di,u.minute\u003du.minutes\u003dce,u.second\u003du.seconds\u003dwe,u.millisecond\u003du.milliseconds\u003dfe,u.utcOffset\u003dfunction(e,t,n){var s,i\u003dthis._offset||0;if(!this.isValid())return null!\u003de?this:NaN;if(null\u003d\u003de)return this._isUTC?i:Et(this);if(\"string\"\u003d\u003dtypeof e){if(null\u003d\u003d\u003d(e\u003dVt(ve,e)))return this}else Math.abs(e)\u003c16\u0026\u0026!n\u0026\u0026(e*\u003d60);return!this._isUTC\u0026\u0026t\u0026\u0026(s\u003dEt(this)),this._offset\u003de,this._isUTC\u003d!0,null!\u003ds\u0026\u0026this.add(s,\"m\"),i!\u003d\u003de\u0026\u0026(!t||this._changeInProgress?$t(this,C(e-i,\"m\"),1,!1):this._changeInProgress||(this._changeInProgress\u003d!0,_.updateOffset(this,!0),this._changeInProgress\u003dnull)),this},u.utc\u003dfunction(e){return this.utcOffset(0,e)},u.local\u003dfunction(e){return this._isUTC\u0026\u0026(this.utcOffset(0,e),this._isUTC\u003d!1,e)\u0026\u0026this.subtract(Et(this),\"m\"),this},u.parseZone\u003dfunction(){var e;return null!\u003dthis._tzm?this.utcOffset(this._tzm,!1,!0):\"string\"\u003d\u003dtypeof this._i\u0026\u0026(null!\u003d(e\u003dVt(Me,this._i))?this.utcOffset(e):this.utcOffset(0,!0)),this},u.hasAlignedHourOffset\u003dfunction(e){return!!this.isValid()\u0026\u0026(e\u003de?R(e).utcOffset():0,(this.utcOffset()-e)%60\u003d\u003d0)},u.isDST\u003dfunction(){return this.utcOffset()\u003ethis.clone().month(0).utcOffset()||this.utcOffset()\u003ethis.clone().month(5).utcOffset()},u.isLocal\u003dfunction(){return!!this.isValid()\u0026\u0026!this._isUTC},u.isUtcOffset\u003dfunction(){return!!this.isValid()\u0026\u0026this._isUTC},u.isUtc\u003dAt,u.isUTC\u003dAt,u.zoneAbbr\u003dfunction(){return this._isUTC?\"UTC\":\"\"},u.zoneName\u003dfunction(){return this._isUTC?\"Coordinated Universal Time\":\"\"},u.dates\u003de(\"dates accessor is deprecated. Use date instead.\",ge),u.months\u003de(\"months accessor is deprecated. Use month instead\",Ie),u.years\u003de(\"years accessor is deprecated. Use year instead\",Pe),u.zone\u003de(\"moment().zone is deprecated, use moment().utcOffset instead. http://momentjs.com/guides/#/warnings/zone/\",function(e,t){return null!\u003de?(this.utcOffset(e\u003d\"string\"!\u003dtypeof e?-e:e,t),this):-this.utcOffset()}),u.isDSTShifted\u003de(\"isDSTShifted is deprecated. See http://momentjs.com/guides/#/warnings/dst-shifted/ for more information\",function(){var e,t;return g(this._isDSTShifted)\u0026\u0026(q(e\u003d{},this),(e\u003dNt(e))._a?(t\u003d(e._isUTC?l:R)(e._a),this._isDSTShifted\u003dthis.isValid()\u0026\u00260\u003cfunction(e,t,n){for(var s\u003dMath.min(e.length,t.length),i\u003dMath.abs(e.length-t.length),r\u003d0,a\u003d0;a\u003cs;a++)(n\u0026\u0026e[a]!\u003d\u003dt[a]||!n\u0026\u0026M(e[a])!\u003d\u003dM(t[a]))\u0026\u0026r++;return r+i}(e._a,t.toArray())):this._isDSTShifted\u003d!1),this._isDSTShifted});d\u003dK.prototype;function cn(e,t,n,s){var i\u003dP(),s\u003dl().set(s,t);return i[n](s,e)}function fn(e,t,n){if(w(e)\u0026\u0026(t\u003de,e\u003dvoid 0),e\u003de||\"\",null!\u003dt)return cn(e,t,n,\"month\");for(var s\u003d[],i\u003d0;i\u003c12;i++)s[i]\u003dcn(e,i,n,\"month\");return s}function mn(e,t,n,s){t\u003d(\"boolean\"\u003d\u003dtypeof e?w(t)\u0026\u0026(n\u003dt,t\u003dvoid 0):(t\u003de,e\u003d!1,w(n\u003dt)\u0026\u0026(n\u003dt,t\u003dvoid 0)),t||\"\");var i,r\u003dP(),a\u003de?r._week.dow:0,o\u003d[];if(null!\u003dn)return cn(t,(n+a)%7,s,\"day\");for(i\u003d0;i\u003c7;i++)o[i]\u003dcn(t,(i+a)%7,s,\"day\");return o}d.calendar\u003dfunction(e,t,n){return a(e\u003dthis._calendar[e]||this._calendar.sameElse)?e.call(t,n):e},d.longDateFormat\u003dfunction(e){var t\u003dthis._longDateFormat[e],n\u003dthis._longDateFormat[e.toUpperCase()];return t||!n?t:(this._longDateFormat[e]\u003dn.match(te).map(function(e){return\"MMMM\"\u003d\u003d\u003de||\"MM\"\u003d\u003d\u003de||\"DD\"\u003d\u003d\u003de||\"dddd\"\u003d\u003d\u003de?e.slice(1):e}).join(\"\"),this._longDateFormat[e])},d.invalidDate\u003dfunction(){return this._invalidDate},d.ordinal\u003dfunction(e){return this._ordinal.replace(\"%d\",e)},d.preparse\u003dhn,d.postformat\u003dhn,d.relativeTime\u003dfunction(e,t,n,s){var i\u003dthis._relativeTime[n];return a(i)?i(e,t,n,s):i.replace(/%d/i,e)},d.pastFuture\u003dfunction(e,t){return a(e\u003dthis._relativeTime[0\u003ce?\"future\":\"past\"])?e(t):e.replace(/%s/i,t)},d.set\u003dfunction(e){var t,n;for(n in e)c(e,n)\u0026\u0026(a(t\u003de[n])?this[n]\u003dt:this[\"_\"+n]\u003dt);this._config\u003de,this._dayOfMonthOrdinalParseLenient\u003dnew RegExp((this._dayOfMonthOrdinalParse.source||this._ordinalParse.source)+\"|\"+/\\d{1,2}/.source)},d.eras\u003dfunction(e,t){for(var n,s\u003dthis._eras||P(\"en\")._eras,i\u003d0,r\u003ds.length;i\u003cr;++i){switch(typeof s[i].since){case\"string\":n\u003d_(s[i].since).startOf(\"day\"),s[i].since\u003dn.valueOf();break}switch(typeof s[i].until){case\"undefined\":s[i].until\u003d1/0;break;case\"string\":n\u003d_(s[i].until).startOf(\"day\").valueOf(),s[i].until\u003dn.valueOf();break}}return s},d.erasParse\u003dfunction(e,t,n){var s,i,r,a,o,u\u003dthis.eras();for(e\u003de.toUpperCase(),s\u003d0,i\u003du.length;s\u003ci;++s)if(r\u003du[s].name.toUpperCase(),a\u003du[s].abbr.toUpperCase(),o\u003du[s].narrow.toUpperCase(),n)switch(t){case\"N\":case\"NN\":case\"NNN\":if(a\u003d\u003d\u003de)return u[s];break;case\"NNNN\":if(r\u003d\u003d\u003de)return u[s];break;case\"NNNNN\":if(o\u003d\u003d\u003de)return u[s];break}else if(0\u003c\u003d[r,a,o].indexOf(e))return u[s]},d.erasConvertYear\u003dfunction(e,t){var n\u003de.since\u003c\u003de.until?1:-1;return void 0\u003d\u003d\u003dt?_(e.since).year():_(e.since).year()+(t-e.offset)*n},d.erasAbbrRegex\u003dfunction(e){return c(this,\"_erasAbbrRegex\")||an.call(this),e?this._erasAbbrRegex:this._erasRegex},d.erasNameRegex\u003dfunction(e){return c(this,\"_erasNameRegex\")||an.call(this),e?this._erasNameRegex:this._erasRegex},d.erasNarrowRegex\u003dfunction(e){return c(this,\"_erasNarrowRegex\")||an.call(this),e?this._erasNarrowRegex:this._erasRegex},d.months\u003dfunction(e,t){return e?(y(this._months)?this._months:this._months[(this._months.isFormat||Ve).test(t)?\"format\":\"standalone\"])[e.month()]:y(this._months)?this._months:this._months.standalone},d.monthsShort\u003dfunction(e,t){return e?(y(this._monthsShort)?this._monthsShort:this._monthsShort[Ve.test(t)?\"format\":\"standalone\"])[e.month()]:y(this._monthsShort)?this._monthsShort:this._monthsShort.standalone},d.monthsParse\u003dfunction(e,t,n){var s,i;if(this._monthsParseExact)return function(e,t,n){var s,i,r,e\u003de.toLocaleLowerCase();if(!this._monthsParse)for(this._monthsParse\u003d[],this._longMonthsParse\u003d[],this._shortMonthsParse\u003d[],s\u003d0;s\u003c12;++s)r\u003dl([2e3,s]),this._shortMonthsParse[s]\u003dthis.monthsShort(r,\"\").toLocaleLowerCase(),this._longMonthsParse[s]\u003dthis.months(r,\"\").toLocaleLowerCase();return n?\"MMM\"\u003d\u003d\u003dt?-1!\u003d\u003d(i\u003dx.call(this._shortMonthsParse,e))?i:null:-1!\u003d\u003d(i\u003dx.call(this._longMonthsParse,e))?i:null:\"MMM\"\u003d\u003d\u003dt?-1!\u003d\u003d(i\u003dx.call(this._shortMonthsParse,e))||-1!\u003d\u003d(i\u003dx.call(this._longMonthsParse,e))?i:null:-1!\u003d\u003d(i\u003dx.call(this._longMonthsParse,e))||-1!\u003d\u003d(i\u003dx.call(this._shortMonthsParse,e))?i:null}.call(this,e,t,n);for(this._monthsParse||(this._monthsParse\u003d[],this._longMonthsParse\u003d[],this._shortMonthsParse\u003d[]),s\u003d0;s\u003c12;s++){if(i\u003dl([2e3,s]),n\u0026\u0026!this._longMonthsParse[s]\u0026\u0026(this._longMonthsParse[s]\u003dnew RegExp(\"^\"+this.months(i,\"\").replace(\".\",\"\")+\"$\",\"i\"),this._shortMonthsParse[s]\u003dnew RegExp(\"^\"+this.monthsShort(i,\"\").replace(\".\",\"\")+\"$\",\"i\")),n||this._monthsParse[s]||(i\u003d\"^\"+this.months(i,\"\")+\"|^\"+this.monthsShort(i,\"\"),this._monthsParse[s]\u003dnew RegExp(i.replace(\".\",\"\"),\"i\")),n\u0026\u0026\"MMMM\"\u003d\u003d\u003dt\u0026\u0026this._longMonthsParse[s].test(e))return s;if(n\u0026\u0026\"MMM\"\u003d\u003d\u003dt\u0026\u0026this._shortMonthsParse[s].test(e))return s;if(!n\u0026\u0026this._monthsParse[s].test(e))return s}},d.monthsRegex\u003dfunction(e){return this._monthsParseExact?(c(this,\"_monthsRegex\")||je.call(this),e?this._monthsStrictRegex:this._monthsRegex):(c(this,\"_monthsRegex\")||(this._monthsRegex\u003dEe),this._monthsStrictRegex\u0026\u0026e?this._monthsStrictRegex:this._monthsRegex)},d.monthsShortRegex\u003dfunction(e){return this._monthsParseExact?(c(this,\"_monthsRegex\")||je.call(this),e?this._monthsShortStrictRegex:this._monthsShortRegex):(c(this,\"_monthsShortRegex\")||(this._monthsShortRegex\u003dGe),this._monthsShortStrictRegex\u0026\u0026e?this._monthsShortStrictRegex:this._monthsShortRegex)},d.week\u003dfunction(e){return Be(e,this._week.dow,this._week.doy).week},d.firstDayOfYear\u003dfunction(){return this._week.doy},d.firstDayOfWeek\u003dfunction(){return this._week.dow},d.weekdays\u003dfunction(e,t){return t\u003dy(this._weekdays)?this._weekdays:this._weekdays[e\u0026\u0026!0!\u003d\u003de\u0026\u0026this._weekdays.isFormat.test(t)?\"format\":\"standalone\"],!0\u003d\u003d\u003de?Je(t,this._week.dow):e?t[e.day()]:t},d.weekdaysMin\u003dfunction(e){return!0\u003d\u003d\u003de?Je(this._weekdaysMin,this._week.dow):e?this._weekdaysMin[e.day()]:this._weekdaysMin},d.weekdaysShort\u003dfunction(e){return!0\u003d\u003d\u003de?Je(this._weekdaysShort,this._week.dow):e?this._weekdaysShort[e.day()]:this._weekdaysShort},d.weekdaysParse\u003dfunction(e,t,n){var s,i;if(this._weekdaysParseExact)return function(e,t,n){var s,i,r,e\u003de.toLocaleLowerCase();if(!this._weekdaysParse)for(this._weekdaysParse\u003d[],this._shortWeekdaysParse\u003d[],this._minWeekdaysParse\u003d[],s\u003d0;s\u003c7;++s)r\u003dl([2e3,1]).day(s),this._minWeekdaysParse[s]\u003dthis.weekdaysMin(r,\"\").toLocaleLowerCase(),this._shortWeekdaysParse[s]\u003dthis.weekdaysShort(r,\"\").toLocaleLowerCase(),this._weekdaysParse[s]\u003dthis.weekdays(r,\"\").toLocaleLowerCase();return n?\"dddd\"\u003d\u003d\u003dt?-1!\u003d\u003d(i\u003dx.call(this._weekdaysParse,e))?i:null:\"ddd\"\u003d\u003d\u003dt?-1!\u003d\u003d(i\u003dx.call(this._shortWeekdaysParse,e))?i:null:-1!\u003d\u003d(i\u003dx.call(this._minWeekdaysParse,e))?i:null:\"dddd\"\u003d\u003d\u003dt?-1!\u003d\u003d(i\u003dx.call(this._weekdaysParse,e))||-1!\u003d\u003d(i\u003dx.call(this._shortWeekdaysParse,e))||-1!\u003d\u003d(i\u003dx.call(this._minWeekdaysParse,e))?i:null:\"ddd\"\u003d\u003d\u003dt?-1!\u003d\u003d(i\u003dx.call(this._shortWeekdaysParse,e))||-1!\u003d\u003d(i\u003dx.call(this._weekdaysParse,e))||-1!\u003d\u003d(i\u003dx.call(this._minWeekdaysParse,e))?i:null:-1!\u003d\u003d(i\u003dx.call(this._minWeekdaysParse,e))||-1!\u003d\u003d(i\u003dx.call(this._weekdaysParse,e))||-1!\u003d\u003d(i\u003dx.call(this._shortWeekdaysParse,e))?i:null}.call(this,e,t,n);for(this._weekdaysParse||(this._weekdaysParse\u003d[],this._minWeekdaysParse\u003d[],this._shortWeekdaysParse\u003d[],this._fullWeekdaysParse\u003d[]),s\u003d0;s\u003c7;s++){if(i\u003dl([2e3,1]).day(s),n\u0026\u0026!this._fullWeekdaysParse[s]\u0026\u0026(this._fullWeekdaysParse[s]\u003dnew RegExp(\"^\"+this.weekdays(i,\"\").replace(\".\",\"\\\\.?\")+\"$\",\"i\"),this._shortWeekdaysParse[s]\u003dnew RegExp(\"^\"+this.weekdaysShort(i,\"\").replace(\".\",\"\\\\.?\")+\"$\",\"i\"),this._minWeekdaysParse[s]\u003dnew RegExp(\"^\"+this.weekdaysMin(i,\"\").replace(\".\",\"\\\\.?\")+\"$\",\"i\")),this._weekdaysParse[s]||(i\u003d\"^\"+this.weekdays(i,\"\")+\"|^\"+this.weekdaysShort(i,\"\")+\"|^\"+this.weekdaysMin(i,\"\"),this._weekdaysParse[s]\u003dnew RegExp(i.replace(\".\",\"\"),\"i\")),n\u0026\u0026\"dddd\"\u003d\u003d\u003dt\u0026\u0026this._fullWeekdaysParse[s].test(e))return s;if(n\u0026\u0026\"ddd\"\u003d\u003d\u003dt\u0026\u0026this._shortWeekdaysParse[s].test(e))return s;if(n\u0026\u0026\"dd\"\u003d\u003d\u003dt\u0026\u0026this._minWeekdaysParse[s].test(e))return s;if(!n\u0026\u0026this._weekdaysParse[s].test(e))return s}},d.weekdaysRegex\u003dfunction(e){return this._weekdaysParseExact?(c(this,\"_weekdaysRegex\")||st.call(this),e?this._weekdaysStrictRegex:this._weekdaysRegex):(c(this,\"_weekdaysRegex\")||(this._weekdaysRegex\u003det),this._weekdaysStrictRegex\u0026\u0026e?this._weekdaysStrictRegex:this._weekdaysRegex)},d.weekdaysShortRegex\u003dfunction(e){return this._weekdaysParseExact?(c(this,\"_weekdaysRegex\")||st.call(this),e?this._weekdaysShortStrictRegex:this._weekdaysShortRegex):(c(this,\"_weekdaysShortRegex\")||(this._weekdaysShortRegex\u003dtt),this._weekdaysShortStrictRegex\u0026\u0026e?this._weekdaysShortStrictRegex:this._weekdaysShortRegex)},d.weekdaysMinRegex\u003dfunction(e){return this._weekdaysParseExact?(c(this,\"_weekdaysRegex\")||st.call(this),e?this._weekdaysMinStrictRegex:this._weekdaysMinRegex):(c(this,\"_weekdaysMinRegex\")||(this._weekdaysMinRegex\u003dnt),this._weekdaysMinStrictRegex\u0026\u0026e?this._weekdaysMinStrictRegex:this._weekdaysMinRegex)},d.isPM\u003dfunction(e){return\"p\"\u003d\u003d\u003d(e+\"\").toLowerCase().charAt(0)},d.meridiem\u003dfunction(e,t,n){return 11\u003ce?n?\"pm\":\"PM\":n?\"am\":\"AM\"},ft(\"en\",{eras:[{since:\"0001-01-01\",until:1/0,offset:1,name:\"Anno Domini\",narrow:\"AD\",abbr:\"AD\"},{since:\"0000-12-31\",until:-1/0,offset:1,name:\"Before Christ\",narrow:\"BC\",abbr:\"BC\"}],dayOfMonthOrdinalParse:/\\d{1,2}(th|st|nd|rd)/,ordinal:function(e){var t\u003de%10;return e+(1\u003d\u003d\u003dM(e%100/10)?\"th\":1\u003d\u003dt?\"st\":2\u003d\u003dt?\"nd\":3\u003d\u003dt?\"rd\":\"th\")}}),_.lang\u003de(\"moment.lang is deprecated. Use moment.locale instead.\",ft),_.langData\u003de(\"moment.langData is deprecated. Use moment.localeData instead.\",P);var _n\u003dMath.abs;function yn(e,t,n,s){t\u003dC(t,n);return e._milliseconds+\u003ds*t._milliseconds,e._days+\u003ds*t._days,e._months+\u003ds*t._months,e._bubble()}function gn(e){return e\u003c0?Math.floor(e):Math.ceil(e)}function wn(e){return 4800*e/146097}function pn(e){return 146097*e/4800}function kn(e){return function(){return this.as(e)}}de\u003dkn(\"ms\"),t\u003dkn(\"s\"),ye\u003dkn(\"m\"),he\u003dkn(\"h\"),Fe\u003dkn(\"d\"),_e\u003dkn(\"w\"),me\u003dkn(\"M\"),Qe\u003dkn(\"Q\"),i\u003dkn(\"y\"),ce\u003dde;function Mn(e){return function(){return this.isValid()?this._data[e]:NaN}}var we\u003dMn(\"milliseconds\"),fe\u003dMn(\"seconds\"),ge\u003dMn(\"minutes\"),Pe\u003dMn(\"hours\"),d\u003dMn(\"days\"),vn\u003dMn(\"months\"),Dn\u003dMn(\"years\");var Yn\u003dMath.round,Sn\u003d{ss:44,s:45,m:45,h:22,d:26,w:null,M:11};function On(e,t,n,s){var i\u003dC(e).abs(),r\u003dYn(i.as(\"s\")),a\u003dYn(i.as(\"m\")),o\u003dYn(i.as(\"h\")),u\u003dYn(i.as(\"d\")),l\u003dYn(i.as(\"M\")),d\u003dYn(i.as(\"w\")),i\u003dYn(i.as(\"y\")),r\u003d(r\u003c\u003dn.ss?[\"s\",r]:r\u003cn.s\u0026\u0026[\"ss\",r])||(a\u003c\u003d1?[\"m\"]:a\u003cn.m\u0026\u0026[\"mm\",a])||(o\u003c\u003d1?[\"h\"]:o\u003cn.h\u0026\u0026[\"hh\",o])||(u\u003c\u003d1?[\"d\"]:u\u003cn.d\u0026\u0026[\"dd\",u]);return(r\u003d(r\u003dnull!\u003dn.w?r||(d\u003c\u003d1?[\"w\"]:d\u003cn.w\u0026\u0026[\"ww\",d]):r)||(l\u003c\u003d1?[\"M\"]:l\u003cn.M\u0026\u0026[\"MM\",l])||(i\u003c\u003d1?[\"y\"]:[\"yy\",i]))[2]\u003dt,r[3]\u003d0\u003c+e,r[4]\u003ds,function(e,t,n,s,i){return i.relativeTime(t||1,!!n,e,s)}.apply(null,r)}var bn\u003dMath.abs;function Tn(e){return(0\u003ce)-(e\u003c0)||+e}function xn(){var e,t,n,s,i,r,a,o,u,l,d;return this.isValid()?(e\u003dbn(this._milliseconds)/1e3,t\u003dbn(this._days),n\u003dbn(this._months),(o\u003dthis.asSeconds())?(s\u003dm(e/60),i\u003dm(s/60),e%\u003d60,s%\u003d60,r\u003dm(n/12),n%\u003d12,a\u003de?e.toFixed(3).replace(/\\.?0+$/,\"\"):\"\",u\u003dTn(this._months)!\u003d\u003dTn(o)?\"-\":\"\",l\u003dTn(this._days)!\u003d\u003dTn(o)?\"-\":\"\",d\u003dTn(this._milliseconds)!\u003d\u003dTn(o)?\"-\":\"\",(o\u003c0?\"-\":\"\")+\"P\"+(r?u+r+\"Y\":\"\")+(n?u+n+\"M\":\"\")+(t?l+t+\"D\":\"\")+(i||s||e?\"T\":\"\")+(i?d+i+\"H\":\"\")+(s?d+s+\"M\":\"\")+(e?d+a+\"S\":\"\")):\"P0D\"):this.localeData().invalidDate()}var U\u003dCt.prototype;return U.isValid\u003dfunction(){return this._isValid},U.abs\u003dfunction(){var e\u003dthis._data;return this._milliseconds\u003d_n(this._milliseconds),this._days\u003d_n(this._days),this._months\u003d_n(this._months),e.milliseconds\u003d_n(e.milliseconds),e.seconds\u003d_n(e.seconds),e.minutes\u003d_n(e.minutes),e.hours\u003d_n(e.hours),e.months\u003d_n(e.months),e.years\u003d_n(e.years),this},U.add\u003dfunction(e,t){return yn(this,e,t,1)},U.subtract\u003dfunction(e,t){return yn(this,e,t,-1)},U.as\u003dfunction(e){if(!this.isValid())return NaN;var t,n,s\u003dthis._milliseconds;if(\"month\"\u003d\u003d\u003d(e\u003do(e))||\"quarter\"\u003d\u003d\u003de||\"year\"\u003d\u003d\u003de)switch(t\u003dthis._days+s/864e5,n\u003dthis._months+wn(t),e){case\"month\":return n;case\"quarter\":return n/3;case\"year\":return n/12}else switch(t\u003dthis._days+Math.round(pn(this._months)),e){case\"week\":return t/7+s/6048e5;case\"day\":return t+s/864e5;case\"hour\":return 24*t+s/36e5;case\"minute\":return 1440*t+s/6e4;case\"second\":return 86400*t+s/1e3;case\"millisecond\":return Math.floor(864e5*t)+s;default:throw new Error(\"Unknown unit \"+e)}},U.asMilliseconds\u003dde,U.asSeconds\u003dt,U.asMinutes\u003dye,U.asHours\u003dhe,U.asDays\u003dFe,U.asWeeks\u003d_e,U.asMonths\u003dme,U.asQuarters\u003dQe,U.asYears\u003di,U.valueOf\u003dce,U._bubble\u003dfunction(){var e\u003dthis._milliseconds,t\u003dthis._days,n\u003dthis._months,s\u003dthis._data;return 0\u003c\u003de\u0026\u00260\u003c\u003dt\u0026\u00260\u003c\u003dn||e\u003c\u003d0\u0026\u0026t\u003c\u003d0\u0026\u0026n\u003c\u003d0||(e+\u003d864e5*gn(pn(n)+t),n\u003dt\u003d0),s.milliseconds\u003de%1e3,e\u003dm(e/1e3),s.seconds\u003de%60,e\u003dm(e/60),s.minutes\u003de%60,e\u003dm(e/60),s.hours\u003de%24,t+\u003dm(e/24),n+\u003de\u003dm(wn(t)),t-\u003dgn(pn(e)),e\u003dm(n/12),n%\u003d12,s.days\u003dt,s.months\u003dn,s.years\u003de,this},U.clone\u003dfunction(){return C(this)},U.get\u003dfunction(e){return e\u003do(e),this.isValid()?this[e+\"s\"]():NaN},U.milliseconds\u003dwe,U.seconds\u003dfe,U.minutes\u003dge,U.hours\u003dPe,U.days\u003dd,U.weeks\u003dfunction(){return m(this.days()/7)},U.months\u003dvn,U.years\u003dDn,U.humanize\u003dfunction(e,t){var n,s;return this.isValid()?(n\u003d!1,s\u003dSn,\"object\"\u003d\u003dtypeof e\u0026\u0026(t\u003de,e\u003d!1),\"boolean\"\u003d\u003dtypeof e\u0026\u0026(n\u003de),\"object\"\u003d\u003dtypeof t\u0026\u0026(s\u003dObject.assign({},Sn,t),null!\u003dt.s)\u0026\u0026null\u003d\u003dt.ss\u0026\u0026(s.ss\u003dt.s-1),e\u003dthis.localeData(),t\u003dOn(this,!n,s,e),n\u0026\u0026(t\u003de.pastFuture(+this,t)),e.postformat(t)):this.localeData().invalidDate()},U.toISOString\u003dxn,U.toString\u003dxn,U.toJSON\u003dxn,U.locale\u003dXt,U.localeData\u003dKt,U.toIsoString\u003de(\"toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)\",xn),U.lang\u003dKe,s(\"X\",0,0,\"unix\"),s(\"x\",0,0,\"valueOf\"),h(\"x\",ke),h(\"X\",/[+-]?\\d+(\\.\\d{1,3})?/),v(\"X\",function(e,t,n){n._d\u003dnew Date(1e3*parseFloat(e))}),v(\"x\",function(e,t,n){n._d\u003dnew Date(M(e))}),_.version\u003d\"2.30.1\",H\u003dR,_.fn\u003du,_.min\u003dfunction(){return Pt(\"isBefore\",[].slice.call(arguments,0))},_.max\u003dfunction(){return Pt(\"isAfter\",[].slice.call(arguments,0))},_.now\u003dfunction(){return Date.now?Date.now():+new Date},_.utc\u003dl,_.unix\u003dfunction(e){return R(1e3*e)},_.months\u003dfunction(e,t){return fn(e,t,\"months\")},_.isDate\u003dV,_.locale\u003dft,_.invalid\u003dI,_.duration\u003dC,_.isMoment\u003dk,_.weekdays\u003dfunction(e,t,n){return mn(e,t,n,\"weekdays\")},_.parseZone\u003dfunction(){return R.apply(null,arguments).parseZone()},_.localeData\u003dP,_.isDuration\u003dUt,_.monthsShort\u003dfunction(e,t){return fn(e,t,\"monthsShort\")},_.weekdaysMin\u003dfunction(e,t,n){return mn(e,t,n,\"weekdaysMin\")},_.defineLocale\u003dmt,_.updateLocale\u003dfunction(e,t){var n,s;return null!\u003dt?(s\u003dut,null!\u003dW[e]\u0026\u0026null!\u003dW[e].parentLocale?W[e].set(X(W[e]._config,t)):(t\u003dX(s\u003dnull!\u003d(n\u003dct(e))?n._config:s,t),null\u003d\u003dn\u0026\u0026(t.abbr\u003de),(s\u003dnew K(t)).parentLocale\u003dW[e],W[e]\u003ds),ft(e)):null!\u003dW[e]\u0026\u0026(null!\u003dW[e].parentLocale?(W[e]\u003dW[e].parentLocale,e\u003d\u003d\u003dft()\u0026\u0026ft(e)):null!\u003dW[e]\u0026\u0026delete W[e]),W[e]},_.locales\u003dfunction(){return ee(W)},_.weekdaysShort\u003dfunction(e,t,n){return mn(e,t,n,\"weekdaysShort\")},_.normalizeUnits\u003do,_.relativeTimeRounding\u003dfunction(e){return void 0\u003d\u003d\u003de?Yn:\"function\"\u003d\u003dtypeof e\u0026\u0026(Yn\u003de,!0)},_.relativeTimeThreshold\u003dfunction(e,t){return void 0!\u003d\u003dSn[e]\u0026\u0026(void 0\u003d\u003d\u003dt?Sn[e]:(Sn[e]\u003dt,\"s\"\u003d\u003d\u003de\u0026\u0026(Sn.ss\u003dt-1),!0))},_.calendarFormat\u003dfunction(e,t){return(e\u003de.diff(t,\"days\",!0))\u003c-6?\"sameElse\":e\u003c-1?\"lastWeek\":e\u003c0?\"lastDay\":e\u003c1?\"sameDay\":e\u003c2?\"nextDay\":e\u003c7?\"nextWeek\":\"sameElse\"},_.prototype\u003du,_.HTML5_FMT\u003d{DATETIME_LOCAL:\"YYYY-MM-DDTHH:mm\",DATETIME_LOCAL_SECONDS:\"YYYY-MM-DDTHH:mm:ss\",DATETIME_LOCAL_MS:\"YYYY-MM-DDTHH:mm:ss.SSS\",DATE:\"YYYY-MM-DD\",TIME:\"HH:mm\",TIME_SECONDS:\"HH:mm:ss\",TIME_MS:\"HH:mm:ss.SSS\",WEEK:\"GGGG-[W]WW\",MONTH:\"YYYY-MM\"},_});\n//# sourceMappingURL\u003dmoment.min.js.map"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "18"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "JavaScriptGetMonthsWithMomentLib",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 400,
+      "y": 288
+    }
+  }, {
+    "task": "SubWorkflowForEachLoopV2Task",
+    "taskId": "3",
+    "parameters": {
+      "iterationElementMapping": {
+        "key": "iterationElementMapping",
+        "value": {
+          "stringValue": "envInputForAnalytics"
+        }
+      },
+      "triggerId": {
+        "key": "triggerId",
+        "value": {
+          "stringValue": "private_trigger/cl-getAPICount_Private_2"
+        }
+      },
+      "aggregatorParameterMapping": {
+        "key": "aggregatorParameterMapping"
+      },
+      "loopMetadata": {
+        "key": "loopMetadata",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_3_loopMetadata`$"]
+          }
+        }
+      },
+      "disableEucPropagation": {
+        "key": "disableEucPropagation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "listToIterate": {
+        "key": "listToIterate",
+        "value": {
+          "stringValue": "$envList$"
+        }
+      },
+      "workflowName": {
+        "key": "workflowName",
+        "value": {
+          "stringValue": "cl-getApiCount"
+        }
+      },
+      "requestParameterMapping": {
+        "key": "requestParameterMapping",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"orgInputForAnalytics\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"orgInputForEnv\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForOrg\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForEnv\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"triggerTypeForOrg\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"triggerTypeForEnv\"\n      }\n    }\n  }]\n}"
+        }
+      },
+      "overrideParameterMapping": {
+        "key": "overrideParameterMapping",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForEnv\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"analyticsDataOutputForOrg\"\n      }\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "For Each Environment",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1384,
+      "y": 414
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "4",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"{\\\"data\\\": [ ]}\"\n          }\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$analyticsDataOutput$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "11"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Init variables",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 112,
+      "y": 290
+    }
+  }],
+  "integrationParameters": [{
+    "key": "`Task_1_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_1_responseHeader`",
+    "isTransient": true,
+    "producer": "1_1"
+  }, {
+    "key": "`Task_1_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_1_responseStatus`",
+    "isTransient": true,
+    "producer": "1_1"
+  }, {
+    "key": "apigee_host",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "https://apigee.googleapis.com"
+    },
+    "displayName": "apigee_host"
+  }, {
+    "key": "`Task_1_responseBody`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`Task_1_responseBody`",
+    "isTransient": true,
+    "producer": "1_1"
+  }, {
+    "key": "envList",
+    "dataType": "JSON_VALUE",
+    "displayName": "envList",
+    "inputOutputType": "OUT"
+  }, {
+    "key": "`Task_3_loopMetadata`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_3_loopMetadata`",
+    "isTransient": true,
+    "producer": "1_3"
+  }, {
+    "key": "deploymentNumber",
+    "dataType": "INT_VALUE",
+    "displayName": "deploymentNumber"
+  }, {
+    "key": "envPDU_local",
+    "dataType": "JSON_VALUE",
+    "displayName": "envPDU_local",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"date\": {\n      \"type\": \"string\"\n    },\n    \"number\": {\n      \"type\": \"integer\"\n    },\n    \"environment\": {\n      \"type\": \"string\"\n    },\n    \"organization\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+  }, {
+    "key": "jsonResponse",
+    "dataType": "JSON_VALUE",
+    "displayName": "jsonResponse"
+  }, {
+    "key": "responseSize",
+    "dataType": "INT_VALUE",
+    "displayName": "responseSize"
+  }, {
+    "key": "isEmpty",
+    "dataType": "BOOLEAN_VALUE",
+    "displayName": "isEmpty"
+  }, {
+    "key": "`Task_11_loopMetadata`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_11_loopMetadata`",
+    "isTransient": true,
+    "producer": "1_11"
+  }, {
+    "key": "orgEnvPDU_local",
+    "dataType": "JSON_VALUE",
+    "displayName": "orgEnvPDU_local",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"pdu\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"date\": {\n            \"type\": \"string\"\n          },\n          \"number\": {\n            \"type\": \"number\"\n          },\n          \"environment\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "orgInput",
+    "dataType": "STRING_VALUE",
+    "displayName": "orgInput"
+  }, {
+    "key": "envInput",
+    "dataType": "STRING_VALUE",
+    "displayName": "envInput"
+  }, {
+    "key": "OrganizationList",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"organizations\": [\"bap-emea-apigee-5\", \"bap-emea-apigee-3\"]\n}"
+    },
+    "displayName": "OrganizationList",
+    "inputOutputType": "IN",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"organizations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
+  }, {
+    "key": "`Task_17_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_17_responseHeader`",
+    "isTransient": true,
+    "producer": "1_17"
+  }, {
+    "key": "`Task_17_responseBody`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_17_responseBody`",
+    "isTransient": true,
+    "producer": "1_17"
+  }, {
+    "key": "`Task_17_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_17_responseStatus`",
+    "isTransient": true,
+    "producer": "1_17"
+  }, {
+    "key": "`Task_18_loopMetadata`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_18_loopMetadata`",
+    "isTransient": true,
+    "producer": "1_18",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"sub_integration_execution_ids\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"current_iteration_count\": {\n      \"type\": \"number\"\n    },\n    \"failure_message\": {\n      \"type\": \"string\"\n    },\n    \"failure_location\": {\n      \"type\": \"string\"\n    },\n    \"current_element\": {\n      \"type\": [\"string\", \"number\", \"object\", \"array\"]\n    }\n  }\n}"
+  }, {
+    "key": "startDateTime",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "Start Date and Time\n04/01/2024 00:00"
+    },
+    "displayName": "startDateTime"
+  }, {
+    "key": "analyticsDatesArray2",
+    "dataType": "STRING_ARRAY",
+    "displayName": "analyticsDatesArray2"
+  }, {
+    "key": "analyticsTimeRangeQueryParam",
+    "dataType": "STRING_VALUE",
+    "displayName": "analyticsTimeRangeQueryParam",
+    "inputOutputType": "IN"
+  }, {
+    "key": "apigeeAnalyticsMetricsDataArray",
+    "dataType": "JSON_VALUE",
+    "displayName": "apigeeAnalyticsMetricsDataArray",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"identifier\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"names\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          },\n          \"values\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          }\n        }\n      },\n      \"metric\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"values\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"number\"\n              }\n            },\n            \"name\": {\n              \"type\": \"string\"\n            },\n            \"env\": {\n              \"type\": \"string\"\n            }\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "analyticsDatesArray",
+    "dataType": "JSON_VALUE",
+    "displayName": "analyticsDatesArray",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"dates\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
+  }, {
+    "key": "startDateTimeInput",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "04/01/2024 00:00"
+    },
+    "displayName": "startDateTimeInput",
+    "inputOutputType": "IN"
+  }, {
+    "key": "orgInputForAnalytics",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "orgInputForAnalytics",
+    "inputOutputType": "IN"
+  }, {
+    "key": "envInputForAnalytics",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "envInputForAnalytics",
+    "inputOutputType": "IN"
+  }, {
+    "key": "responseBodyForOptimizedAnalyticsRequest",
+    "dataType": "JSON_VALUE",
+    "displayName": "responseBodyForOptimizedAnalyticsRequest"
+  }, {
+    "key": "analyticsApiCountSummary",
+    "dataType": "JSON_VALUE",
+    "displayName": "analyticsApiCountSummary",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"proxy\": {\n            \"type\": \"string\"\n          },\n          \"monthYear\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          },\n          \"count\": {\n            \"type\": \"number\"\n          },\n          \"env\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "analyticsDataOutput",
+    "dataType": "JSON_VALUE",
+    "displayName": "analyticsDataOutput",
+    "inputOutputType": "OUT",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"proxy\": {\n            \"type\": \"string\"\n          },\n          \"monthYear\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          },\n          \"count\": {\n            \"type\": \"number\"\n          },\n          \"env\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "temp",
+    "dataType": "JSON_VALUE",
+    "displayName": "temp"
+  }, {
+    "key": "orgInputForEnv",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "orgInputForEnv",
+    "inputOutputType": "IN"
+  }, {
+    "key": "orgInputForAnalyticsMonth",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "orgInputForAnalyticsMonth",
+    "inputOutputType": "IN"
+  }, {
+    "key": "envInputForAnalyticsMonth",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "envInputForAnalyticsMonth",
+    "inputOutputType": "IN"
+  }, {
+    "key": "shouldAppendToList",
+    "dataType": "BOOLEAN_VALUE",
+    "defaultValue": {
+      "booleanValue": false
+    },
+    "displayName": "shouldAppendToList"
+  }, {
+    "key": "analyticsDataOutputForEnv",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"data\": []\n}"
+    },
+    "displayName": "analyticsDataOutputForEnv",
+    "inputOutputType": "IN_OUT",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"proxy\": {\n            \"type\": \"string\"\n          },\n          \"monthYear\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          },\n          \"count\": {\n            \"type\": \"number\"\n          },\n          \"env\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "analyticsDataOutputForMonthLoop",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"data\": []\n}"
+    },
+    "displayName": "analyticsDataOutputForMonthLoop",
+    "inputOutputType": "IN_OUT",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"proxy\": {\n            \"type\": \"string\"\n          },\n          \"monthYear\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          },\n          \"count\": {\n            \"type\": \"number\"\n          },\n          \"env\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "analyticsDataOutputForOrg",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"data\": []\n}"
+    },
+    "displayName": "analyticsDataOutputForOrg",
+    "inputOutputType": "IN_OUT",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"proxy\": {\n            \"type\": \"string\"\n          },\n          \"monthYear\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          },\n          \"count\": {\n            \"type\": \"number\"\n          },\n          \"env\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "triggerTypeForOrg",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "triggerTypeForOrg",
+    "inputOutputType": "IN"
+  }, {
+    "key": "triggerTypeForEnv",
+    "dataType": "STRING_VALUE",
+    "displayName": "triggerTypeForEnv",
+    "inputOutputType": "IN"
+  }, {
+    "key": "triggerType",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "API"
+    },
+    "displayName": "triggerType",
+    "inputOutputType": "IN"
+  }, {
+    "key": "useUpdatedJS",
+    "dataType": "BOOLEAN_VALUE",
+    "defaultValue": {
+      "booleanValue": true
+    },
+    "displayName": "useUpdatedJS"
+  }, {
+    "key": "startDateInput",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "04/01/2024"
+    },
+    "displayName": "startDateInput",
+    "inputOutputType": "IN"
+  }],
+  "cloudLoggingDetails": {
+    "cloudLoggingSeverity": "CLOUD_LOGGING_SEVERITY_UNSPECIFIED",
+    "enableCloudLogging": false
+  }
+}

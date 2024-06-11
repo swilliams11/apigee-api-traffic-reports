@@ -1,0 +1,4 @@
+{
+	"`CONFIG_CONN_NAME`": "projects/__PROJECT__/locations/__REGION__/connections/cl-getapicount-to-bq",
+    "`CONFIG_CONNECTOR_VERSION`": "projects/__PROJECT__/locations/global/providers/gcp/connectors/bigquery/versions/1"
+}
