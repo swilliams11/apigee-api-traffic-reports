@@ -1,0 +1,1 @@
+looker_sdk==24.10.0  # Or the latest compatible version
