@@ -103,8 +103,20 @@ There will be some overlap here, so I need to update the API trigger to pull all
 2. The scheduled trigger will execute every day and will call the `optimizedStats` API to get all requests for the prior day (24 hours).
 
 
+## Analytics Report
+There are a few options to display data from BigQuery and I only reviewed two of them: Looker and Google Charts/App Engine.
+
+### App Engine
+App Engine with Google Charts is the fastest route to build a dashboard that displays the BigQuery dataset.
+
+### Looker
+Looker requires an instance, which I don't have in my internal project. I would have to create an instance outside of my internal 
+domain and I would prefer not to do that. 
+
 ## Google Cloud
 This is NOT an officially supported Google Cloud product.  Best effort is provided. 
+
+
 
 ## TODOs
 1. ~~Add deployment of Integrations~~
