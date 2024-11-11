@@ -1,0 +1,4 @@
+runtime: nodejs22
+instance_class: B1
+handlers:
+  - url: /hello

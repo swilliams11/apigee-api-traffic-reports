@@ -1,0 +1,22 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  // Fetch data from server-side or directly from BigQuery
+  fetch('/your-data-endpoint')
+    .then(response => response.json())
+    .then(data => {
+      const chartData = google.visualization.arrayToDataTable(data);
+
+      const options = {
+        title: 'Your Chart Title',
+        // ... (add other chart options like width, height, legend, etc.)
+      };
+
+      const chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+      chart.draw(chartData, options);
+    });
+}
+</script>
